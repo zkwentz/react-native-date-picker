@@ -10,8 +10,6 @@ export default class DateMode extends Component {
       date={this.state.date}
       onDateChange={date => this.setState({ date })}
       mode={'date'}
-      style={{borderWidth: 1}}
-      locale={'sv-SE'}
     />
 
 }
