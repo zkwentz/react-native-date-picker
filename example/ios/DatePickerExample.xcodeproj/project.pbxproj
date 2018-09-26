@@ -1193,8 +1193,6 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-datepicker/ios/datepicker",
 					"$(SRCROOT)/../node_modules/date-picker/ios/DatePicker",
-					"$(SRCROOT)/../node_modules/react-native-date-picker-x/ios/DatePickerX",
-					"$(SRCROOT)/../node_modules/react-native-date-picker/ios/DatePickerX",
 				);
 				INFOPLIST_FILE = DatePickerExampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1231,8 +1229,6 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-datepicker/ios/datepicker",
 					"$(SRCROOT)/../node_modules/date-picker/ios/DatePicker",
-					"$(SRCROOT)/../node_modules/react-native-date-picker-x/ios/DatePickerX",
-					"$(SRCROOT)/../node_modules/react-native-date-picker/ios/DatePickerX",
 				);
 				INFOPLIST_FILE = DatePickerExampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1271,8 +1267,6 @@
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-datepicker/ios/datepicker",
 					"$(SRCROOT)/../node_modules/date-picker/ios/DatePicker",
-					"$(SRCROOT)/../node_modules/react-native-date-picker-x/ios/DatePickerX",
-					"$(SRCROOT)/../node_modules/react-native-date-picker/ios/DatePickerX",
 				);
 				INFOPLIST_FILE = DatePickerExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1296,9 +1290,6 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-datepicker/ios/datepicker",
-					"$(SRCROOT)/../node_modules/date-picker/ios/DatePicker",
-					"$(SRCROOT)/../node_modules/react-native-date-picker-x/ios/DatePickerX",
-					"$(SRCROOT)/../node_modules/react-native-date-picker/ios/DatePickerX",
 				);
 				INFOPLIST_FILE = DatePickerExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
