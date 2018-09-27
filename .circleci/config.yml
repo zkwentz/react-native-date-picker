@@ -16,6 +16,9 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
       - run:
+          name: Install npm modules
+          command: cd example/android && yarn
+      - run:
           name: Download Dependencies
           command: cd example/android && ./gradlew androidDependencies
       - save_cache:
