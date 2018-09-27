@@ -26,9 +26,9 @@ jobs:
             - example/node_modules
 
       - persist_to_workspace:
-          root: ~/rn-dp/example
+          root: ~/rn-dp
           paths:
-            - node_modules      
+            - example/node_modules      
 
   android:
     working_directory: ~/rn-dp/example/android
