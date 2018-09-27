@@ -42,7 +42,7 @@ jobs:
 
       - run:
           name: Cd
-          command: ls -la
+          command: cd .. && ls -la
     
       - run:
           name: Download Dependencies
