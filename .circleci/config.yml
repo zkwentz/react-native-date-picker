@@ -37,12 +37,12 @@ jobs:
           at: ~/rn-dp
 
       - restore_cache:
-          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: bundle-v1-{{ checksum "example/Gemfile.lock" }}-{{ arch }}
 
       - run: bundle install
 
       - save_cache:
-          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: bundle-v1-{{ checksum "example/Gemfile.lock" }}-{{ arch }}
           paths:
             - vendor/bundle
 
