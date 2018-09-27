@@ -1,9 +1,5 @@
 version: 2
 jobs:
-  build:
-    branches:
-      only:
-        - feature/espresso-tests
   node:
     working_directory: ~/rn-dp
     docker:
