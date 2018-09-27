@@ -37,26 +37,16 @@ jobs:
           at: ~/rn-dp
 
       - restore_cache:
-          key: bundle-v1-{{ checksum "example/Gemfile.lock" }}-{{ arch }}
-
-      - run: bundle install
-
-      - save_cache:
-          key: bundle-v1-{{ checksum "example/Gemfile.lock" }}-{{ arch }}
-          paths:
-            - vendor/bundle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
       - run:
-          name: fastlane tests
-          command: |
-            mkdir -p test-results/fastlane
-            bundle exec fastlane test
-            mv fastlane/report.xml test-results/fastlane
-      - store_test_results:
-          path: test-results
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
 
-      - store_artifacts:
-          path: test-results
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
 workflows:
   version: 2
