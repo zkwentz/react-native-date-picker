@@ -13,7 +13,7 @@ jobs:
       - restore_cache:
           key: node-v1-{{ checksum "example/package.json" }}-{{ arch }}
 
-      - run: cd example/yarn install
+      - run: yarn install
 
       - save_cache:
           key: yarn-v1-{{ checksum "example/yarn.lock" }}-{{ arch }}
