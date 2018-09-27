@@ -17,6 +17,7 @@ import static android.support.test.espresso.action.ViewActions.pressKey;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
@@ -33,13 +34,13 @@ public class HelloWorldEspressoTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        ViewInteraction reactEditText = onView(
-//                allOf(withContentDescription("searchInputAcc"), isDisplayed()));
-//        reactEditText.perform(replaceText(""));
-//
-//        ViewInteraction reactEditText2 = onView(
-//                allOf(withContentDescription("searchInputAcc"), isDisplayed()));
-//        reactEditText2.perform(click());
+
+        ViewInteraction minimal = onView(allOf(withText("Minimal"), isDisplayed()));
+        minimal.perform(click());
+
+        onView(allOf(withText("Today"), isDisplayed()));
+
+        onView(allOf(withText("Back"), isDisplayed())).perform(click());
 //
 //        ViewInteraction reactEditText3 = onView(
 //                allOf(withContentDescription("searchInputAcc"), isDisplayed()));
@@ -47,10 +48,6 @@ public class HelloWorldEspressoTest {
 //        ViewInteraction re4 = onView(allOf(withContentDescription("searchInputAcc"), isDisplayed()));
 //        re4.perform(pressKey(KeyEvent.KEYCODE_ENTER));
 
-        try {
-            Thread.sleep(7000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 }
