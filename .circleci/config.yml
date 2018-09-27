@@ -5,7 +5,7 @@ jobs:
       only:
         - feature/espresso-tests
   build:
-    working_directory: example/android
+    working_directory: ~/rn-dp
     docker:
       # Android the primary container
       - image: circleci/android:api-26-alpha
