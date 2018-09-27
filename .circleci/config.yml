@@ -25,17 +25,6 @@ jobs:
           paths:
             - example/node_modules
 
-      - persist_to_workspace:
-          root: ~/rn-dp
-          paths:
-            - example/node_modules
-
-      - store_test_results:
-          path: test-results
-
-      - store_artifacts:
-          path: test-results
-
   android:
     working_directory: ~/rn-dp/example/android
     docker:
