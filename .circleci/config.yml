@@ -1,6 +1,10 @@
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - feature/espresso-tests
+  build:
     working_directory: ~/example
     docker:
       # Android the primary container
