@@ -30,7 +30,7 @@ public class HelloWorldEspressoTest {
     @Test
     public void mainActivityTest() {
         try {
-            Thread.sleep(1500);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
