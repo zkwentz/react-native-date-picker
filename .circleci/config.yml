@@ -13,7 +13,7 @@ jobs:
       - restore_cache:
           key: node-v1-{{ checksum "example/package.json" }}-{{ arch }}
 
-      - run: yarn install
+      - run: cd example/yarn install
 
       - save_cache:
           key: yarn-v1-{{ checksum "example/yarn.lock" }}-{{ arch }}
@@ -23,59 +23,52 @@ jobs:
       - save_cache:
           key: node-v1-{{ checksum "example/package.json" }}-{{ arch }}
           paths:
-            - node_modules
+            - example/node_modules
 
       - persist_to_workspace:
-          root: ~/rn-dp
+          root: ~/rn-dp/example/
           paths:
-            - node_modules
+            - example/node_modules
 
       - store_test_results:
           path: test-results
 
       - store_artifacts:
-          path: test-results      
+          path: test-results
+
   android:
-    working_directory: ~/rn-dp
+    working_directory: ~/rn-dp/example/android
     docker:
-      # Android the primary container
-      - image: circleci/android:api-26-alpha
-    environment:
-      JVM_OPTS: -Xmx3200m
+      - image: circleci/android:api-27-node8-alpha
     steps:
-      - checkout
+      - checkout:
+          path: ~/rn-dp/example/
+
+      - attach_workspace:
+          at: ~/rn-dp/example/
+
       - restore_cache:
-          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
-      - run:
-          name: Download Dependencies
-          command: cd example/android && ./gradlew androidDependencies
+          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
+
+      - run: bundle install
+
       - save_cache:
+          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
           paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            - vendor/bundle
+
       - run:
-          name: Setup emulator
-          command: sdkmanager "system-images;android-16;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-16;default;armeabi-v7a"
-      - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
-          background: true
-      - run:
-          name: Wait emulator
+          name: fastlane tests
           command: |
-            # wait for it to have booted
-            circle-android wait-for-boot
-            # unlock the emulator screen
-            sleep 30
-            adb shell input keyevent 82
-      - run:
-          name: Run EspressoTests
-          command: cd example/android && ./gradlew HelloWorldEspressoTest
-      - store_artifacts:
-          path: app/build/reports
-          destination: reports
+            mkdir -p test-results/fastlane
+            bundle exec fastlane test
+            mv fastlane/report.xml test-results/fastlane
       - store_test_results:
-          path: app/build/test-results
+          path: test-results
+
+      - store_artifacts:
+          path: test-results
+
 workflows:
   version: 2
   node-android:
