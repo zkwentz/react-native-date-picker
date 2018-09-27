@@ -14,7 +14,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: jars-{{ checksum "example/android/build.gradle" }}-{{ checksum  "example/android/app/build.gradle" }}
       - run:
           name: Download Dependencies
           command: cd example/android && ./gradlew androidDependencies
