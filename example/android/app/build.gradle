@@ -95,6 +95,8 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
+    testBuildType "release"
+
 
     defaultConfig {
         applicationId "com.datepickerexample"
