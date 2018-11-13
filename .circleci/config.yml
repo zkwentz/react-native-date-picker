@@ -67,6 +67,13 @@ jobs:
           name: Launch emulator
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel auto -verbose
           background: true
+       - run:
+          name: react-native start
+          command: |
+            cd ..
+            sudo npm install -g react-native-cli
+            react-native start &
+            cd android
       - run:
           name: Wait emulator
           command: |
@@ -75,12 +82,6 @@ jobs:
             # unlock the emulator screen
             sleep 30
             adb shell input keyevent 82
-            
-            cd ..
-            sudo npm install -g react-native-cli
-            react-native start &
-            cd android
-
             ./gradlew connectedAndroidTest -PdisablePreDex
       - store_artifacts:
           path: app/build/reports
