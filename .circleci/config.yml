@@ -77,7 +77,7 @@ jobs:
             adb shell input keyevent 82
             
             cd ..
-            npm install -g react-native-cli
+            sudo npm install -g react-native-cli
             react-native start &
             cd android
 
