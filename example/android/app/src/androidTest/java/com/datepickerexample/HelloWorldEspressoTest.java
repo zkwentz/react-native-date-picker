@@ -35,7 +35,7 @@ public class HelloWorldEspressoTest {
             e.printStackTrace();
         }
 
-        ViewInteraction minimal = onView(allOf(withText("Minimal"), isDisplayed()));
+        ViewInteraction minimal = onView(allOf(withText("Minimalx"), isDisplayed()));
 //        ViewInteraction minimal = onView(allOf(withText("to"), isDisplayed()));
         // minimal.perform(click());
 
