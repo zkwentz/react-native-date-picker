@@ -38,9 +38,9 @@ public class HelloWorldEspressoTest {
         ViewInteraction minimal = onView(allOf(withText("Minimal"), isDisplayed()));
         minimal.perform(click());
 
-        // onView(allOf(withText("Today"), isDisplayed()));
+        onView(allOf(withText("Today"), isDisplayed()));
 
-        // onView(allOf(withText("Back"), isDisplayed())).perform(click());
+        onView(allOf(withText("Back"), isDisplayed())).perform(click());
 //
 //        ViewInteraction reactEditText3 = onView(
 //                allOf(withContentDescription("searchInputAcc"), isDisplayed()));
