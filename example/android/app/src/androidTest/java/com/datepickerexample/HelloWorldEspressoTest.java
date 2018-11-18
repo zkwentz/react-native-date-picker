@@ -42,9 +42,15 @@ public class HelloWorldEspressoTest {
 
         onView(allOf(withText("Back"), isDisplayed())).perform(click());
 
-        minimal = onView(allOf(withText("xMinimal"), isDisplayed()));
+        minimal = onView(allOf(withText("Minimal"), isDisplayed()));
         minimal.perform(click());
 
+
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 //
 //        ViewInteraction reactEditText3 = onView(
