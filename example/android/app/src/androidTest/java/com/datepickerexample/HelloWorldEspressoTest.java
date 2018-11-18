@@ -30,17 +30,22 @@ public class HelloWorldEspressoTest {
     @Test
     public void mainActivityTest() {
         try {
-            Thread.sleep(20000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction minimal = onView(allOf(withText("xMinimal"), isDisplayed()));
+        ViewInteraction minimal = onView(allOf(withText("Minimal"), isDisplayed()));
         minimal.perform(click());
 
         onView(allOf(withText("Today"), isDisplayed()));
 
         onView(allOf(withText("Back"), isDisplayed())).perform(click());
+
+        ViewInteraction minimal = onView(allOf(withText("Minimal"), isDisplayed()));
+        minimal.perform(click());
+
+
 //
 //        ViewInteraction reactEditText3 = onView(
 //                allOf(withContentDescription("searchInputAcc"), isDisplayed()));
