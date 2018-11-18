@@ -47,18 +47,10 @@ public class HelloWorldEspressoTest {
 
 
         try {
-            Thread.sleep(15000);
+            Thread.sleep(30000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-//
-//        ViewInteraction reactEditText3 = onView(
-//                allOf(withContentDescription("searchInputAcc"), isDisplayed()));
-//        reactEditText3.perform(replaceText("bold"));
-//        ViewInteraction re4 = onView(allOf(withContentDescription("searchInputAcc"), isDisplayed()));
-//        re4.perform(pressKey(KeyEvent.KEYCODE_ENTER));
-
 
     }
 }
