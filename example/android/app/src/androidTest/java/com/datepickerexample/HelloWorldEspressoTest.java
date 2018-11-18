@@ -30,14 +30,13 @@ public class HelloWorldEspressoTest {
     @Test
     public void mainActivityTest() {
         try {
-            Thread.sleep(20000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        ViewInteraction minimal = onView(allOf(withText("xxxxxxxx"), isDisplayed()));
-//        ViewInteraction minimal = onView(allOf(withText("to"), isDisplayed()));
-        // minimal.perform(click());
+        ViewInteraction minimal = onView(allOf(withText("Minimal"), isDisplayed()));
+        minimal.perform(click());
 
         // onView(allOf(withText("Today"), isDisplayed()));
 
