@@ -1,7 +1,5 @@
 
-# React Native Date Picker  [![npm version](https://badge.fury.io/js/react-native-date-picker.svg)](https://badge.fury.io/js/react-native-date-picker)<img align="right" width="40" height="40" src="https://camo.githubusercontent.com/9dfa7191b95dd9f03a9b2171fe2d8ae2f9c42fdc/68747470733a2f2f7777772e69636f6e7364622e636f6d2f69636f6e732f707265766965772f736f796c656e742d7265642f6e65772d62616467652d78786c2e706e67">
-
-
+# React Native Date Picker [![npm version](https://badge.fury.io/js/react-native-date-picker.svg)](https://npmjs.com/package/react-native-date-picker)<img align="right" width="40" height="40" src="https://camo.githubusercontent.com/9dfa7191b95dd9f03a9b2171fe2d8ae2f9c42fdc/68747470733a2f2f7777772e69636f6e7364622e636f6d2f69636f6e732f707265766965772f736f796c656e742d7265642f6e65772d62616467652d78786c2e706e67">
 This is a React Native Date Picker with following main features: 
 
 📱 Supporting iOS and Android <br>
@@ -21,7 +19,7 @@ This is a React Native Date Picker with following main features:
     <td align="center"><b>Android</b></td>  
   </tr>
    <tr>
-    <td><img src="https://facebook.github.io/react-native/docs/assets/DatePickerIOS/maximumDate.gif" alt="React Native Date Picker IOS" height="150px" />
+    <td><img src="docs/react-native-date-picker.gif" alt="React Native Date Picker" title="React Native Date Picker" height="150px" />
     </td>
     <td><img src="docs/react-native-date-picker-android.gif" alt="React Native Date Picker Android" height="150px" style="margin-left:10px" />
     </td>  
@@ -67,9 +65,11 @@ fadeToColor | Android picker is fading towords this background color. {color, 'n
 maximumDate |  Maximum selectable date. |
 minimumDate |  Minimum selectable date |
 minuteInterval | The interval at which minutes can be selected. | <img src="docs/minute-interval-ios.png" alt="Date picker minute interval IOS" height="120px" />|<img src="docs/minute-interval-android.png" alt="Date picker minute interval Android" height="120px" />
-mode | The date picker mode. {'datetime', 'date', 'time'} | <img src="docs/datetime-mode-ios.png" alt="Datetime mode ios" height="120px" /><img src="docs/date-mode-ios.png" alt="date mode ios" height="120px" /><img src="docs/time-mode-ios.png" alt="time mode ios" height="120px" />|<img src="docs/date-mode-android.png" alt="date mode android" height="120px" /><img src="docs/datetime-mode-android.png" alt="datetime mode android" height="120px" /><img src="docs/time-mode-android.png" alt="time mode android" height="120px" /> |
+mode | The date picker mode. {'datetime', 'date', 'time'} | <img src="docs/datetime-mode-ios.png" alt="Datetime mode ios" height="120px" /><img src="docs/date-mode-ios.png" alt="date mode ios" height="120px" /><img src="docs/time-mode-ios.png" alt="time mode ios" height="120px" />|<img src="docs/datetime-mode-android.png" alt="datetime mode android" height="120px" /><img src="docs/date-mode-android.png" alt="date mode android" height="120px" /><img src="docs/time-mode-android.png" alt="time mode android" height="120px" /> |
 locale | The locale for the date picker. Changes language, date order and am/pm preferences. Value needs to be a <a title="react native datepicker locale id" href="https://developer.apple.com/library/content/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html">Locale ID.</a>| <img src="docs/locale-ios.png" alt="React Native Date picker locale language ios" height="120px" />|<img src="docs/locale-android.png" alt="React Native Date picker locale language android" height="120px" />
 textColor | Changes the text color. | <img src="docs/colors-ios.png" alt="text color background color ios" height="120px" />|<img src="docs/colors-android.png" alt="Text color background color android" height="120px" />
+timeZoneOffsetInMinutes | Timezone offset in minutes (default: device's timezone)
+  
 
 ## About
 📅 &nbsp; React Native Date Picker is a cross platform component working on both iOS and Android. It uses the slightly improved DatePickerIOS on iOS and a custom picker on Android which has similar look and feel. The datetime mode might be particulary interesting if you looking for a way to avoid two different popup pickers on android. 

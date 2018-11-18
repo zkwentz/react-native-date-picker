@@ -8,7 +8,9 @@ import LocalePicker from '../propPickers/LocalePicker';
 import MinMaxDateChange from '../propPickers/MinMaxDateChange';
 import ModePicker from '../propPickers/ModePicker';
 import TextColor from '../propPickers/TextColor';
+import TimeZoneOffsetInMinutes from '../propPickers/TimeZoneOffsetInMinutes';
 import PropSlider from '../PropSlider';
+import MinuteInterval from '../propPickers/MinuteInterval';
 
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + (h * 60 * 60 * 1000));
@@ -31,6 +33,8 @@ export default class Advanced extends Component {
     mode: 'datetime',
     minDate: defaultMinDate,
     maxDate: defaultMaxDate,
+    timeZoneOffsetInMinutes: undefined,
+    minuteInterval: 1,
   }
 
   render() {
@@ -40,12 +44,13 @@ export default class Advanced extends Component {
           date={this.state.chosenDate}
           onDateChange={this.setDate}
           locale={this.state.locale}
-          minuteInterval={1}
+          minuteInterval={this.state.minuteInterval}
           minimumDate={this.state.minDate}
           maximumDate={this.state.maxDate}
           fadeToColor={this.props.backgroundColor}
           textColor={this.state.textColor}
           mode={this.state.mode}
+          timeZoneOffsetInMinutes={this.state.timeZoneOffsetInMinutes}
         />
         <Text>Picker date: {readableDate(this.state.chosenDate)}</Text>
         <Text />
@@ -72,10 +77,17 @@ export default class Advanced extends Component {
         <LocalePicker locale={this.state.locale} onChange={locale => this.setState({ locale })} />
     },
     {
+      name: 'timeZoneOffset', component:
+        <TimeZoneOffsetInMinutes onChange={timeZoneOffsetInMinutes => this.setState({ timeZoneOffsetInMinutes })} />
+    },
+    {
       name: 'date', component:
         <DateChange value={this.state.chosenDate} onChange={chosenDate => this.setState({ chosenDate })} />
     },
-    { name: 'minuteInterval' },
+    {
+      name: 'minuteInterval', component:
+        <MinuteInterval value={this.state.minuteInterval} onChange={minuteInterval => this.setState({ minuteInterval })} />
+    },
     {
       name: 'minDate', component:
         <MinMaxDateChange value={this.state.minDate} onChange={minDate => this.setState({ minDate })}
