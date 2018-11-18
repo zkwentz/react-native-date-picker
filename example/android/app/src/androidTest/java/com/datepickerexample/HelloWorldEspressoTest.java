@@ -42,7 +42,7 @@ public class HelloWorldEspressoTest {
 
         onView(allOf(withText("Back"), isDisplayed())).perform(click());
 
-        minimal = onView(allOf(withText("Minimal"), isDisplayed()));
+        minimal = onView(allOf(withText("xMinimal"), isDisplayed()));
         minimal.perform(click());
 
 
