@@ -18,6 +18,7 @@ class Style {
         this.pickerView = pickerView;
         ImageView overlayTop = (ImageView) pickerView.findViewById(R.id.overlay_top);
         ImageView overlayBottom = (ImageView) pickerView.findViewById(R.id.overlay_bottom);
+        ImageView overlayBottom = (ImageView) pickerView.findViewById(R.id.overlay_bottom);
         this.gradientTop =  (GradientDrawable) overlayTop.getDrawable();
         this.gradientBottom =  (GradientDrawable) overlayBottom.getDrawable();
     }
@@ -36,6 +37,18 @@ class Style {
 
     public void setTextColor(String color) {
         this.pickerView.applyOnAllWheels(new TextColor(color));
+    }
+
+    public void setWidth(int width) {
+        iew view = findViewById(R.id.nutrition_bar_filled);
+        LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = newWidth;
+        view.setLayoutParams(layoutParams);
+        this.pickerView.setMinimumWidth(width);
+    }
+
+    public void setHeight(int height) {
+        this.pickerView.setMinimumHeight(height);
     }
 
     private boolean validColor(String color){
