@@ -1,7 +1,11 @@
 package com.henninghall.date_picker;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.henninghall.date_picker.wheelFunctions.TextColor;
@@ -17,7 +21,6 @@ class Style {
     public Style(PickerView pickerView) {
         this.pickerView = pickerView;
         ImageView overlayTop = (ImageView) pickerView.findViewById(R.id.overlay_top);
-        ImageView overlayBottom = (ImageView) pickerView.findViewById(R.id.overlay_bottom);
         ImageView overlayBottom = (ImageView) pickerView.findViewById(R.id.overlay_bottom);
         this.gradientTop =  (GradientDrawable) overlayTop.getDrawable();
         this.gradientBottom =  (GradientDrawable) overlayBottom.getDrawable();
@@ -40,11 +43,12 @@ class Style {
     }
 
     public void setWidth(int width) {
-        iew view = findViewById(R.id.nutrition_bar_filled);
-        LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.width = newWidth;
+        View view = pickerView.findViewById(R.id.container);
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.width = width;
+
         view.setLayoutParams(layoutParams);
-        this.pickerView.setMinimumWidth(width);
+//        this.pickerView.setMinimumWidth(width);
     }
 
     public void setHeight(int height) {
@@ -54,5 +58,7 @@ class Style {
     private boolean validColor(String color){
         return color != null && color.length() == 7;
     }
+
+
 
 }

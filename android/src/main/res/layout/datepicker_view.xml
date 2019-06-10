@@ -7,14 +7,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@drawable/border"
+>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/wheelsWrapper"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:layout_centerHorizontal="true"
-        android:foregroundGravity="center"
+
+        android:orientation="horizontal"
         >
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/year"
@@ -33,7 +34,7 @@
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/month"
             android:layout_width="wrap_content"
-            android:layout_height="160dp"
+            android:layout_height="match_parent"
             app:npv_ShowCount="5"
             app:npv_RespondChangeOnDetached="false"
             app:npv_TextSizeNormal="18sp"
@@ -47,7 +48,7 @@
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/date"
             android:layout_width="wrap_content"
-            android:layout_height="160dp"
+            android:layout_height="match_parent"
             app:npv_ShowCount="5"
             app:npv_RespondChangeOnDetached="false"
             app:npv_TextSizeNormal="18sp"
@@ -60,8 +61,9 @@
             />
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/day"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="match_parent"
             app:npv_ShowCount="5"
             app:npv_RespondChangeOnDetached="false"
             app:npv_TextSizeNormal="18sp"
@@ -70,15 +72,13 @@
             app:npv_TextColorSelected="#000000"
             app:npv_TextColorNormal="#aaaaaa"
             app:npv_DividerColor="#cccccc"
-            app:npv_ItemPaddingHorizontal="3dp"
-            />
+            app:npv_ItemPaddingHorizontal="3dp"/>
 
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/hour"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
-            android:layout_toEndOf="@+id/day"
-            android:layout_toRightOf="@+id/day"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             app:npv_DividerColor="#cccccc"
             app:npv_RespondChangeOnDetached="false"
             app:npv_ShowCount="5"
@@ -92,10 +92,9 @@
 
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/minutes"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
-            android:layout_toEndOf="@+id/hour"
-            android:layout_toRightOf="@+id/hour"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             app:npv_DividerColor="#cccccc"
             app:npv_RespondChangeOnDetached="false"
             app:npv_ShowCount="5"
@@ -109,10 +108,9 @@
 
         <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/ampm"
-            android:layout_width="wrap_content"
-            android:layout_height="160dp"
-            android:layout_toEndOf="@+id/minutes"
-            android:layout_toRightOf="@+id/minutes"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             app:npv_DividerColor="#cccccc"
             app:npv_RespondChangeOnDetached="false"
             app:npv_ShowCount="5"
@@ -125,7 +123,7 @@
             android:foregroundGravity="center"
 
             />
-    </RelativeLayout>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/overlay_top"

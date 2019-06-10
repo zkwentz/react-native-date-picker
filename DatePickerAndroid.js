@@ -56,12 +56,13 @@ class DatePickerAndroid extends React.PureComponent {
 
 const styles = StyleSheet.create({
     picker: {
-        width: 500,
+        width: 350,
         height: 180,
         borderWidth: 1,
     },
     container: {
         borderWidth: 1,
+        borderColor: 'red',
     }
 })
 

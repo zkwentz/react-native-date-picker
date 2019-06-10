@@ -1,7 +1,9 @@
 package com.henninghall.date_picker;
 
+import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -88,8 +90,19 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
 
   @ReactPropGroup(names = {"height", "width"}, customType = "Style")
   public void setStyle(PickerView view, int index, Integer style) {
-    if(index == 0) view.style.setHeight(style);
-    if(index == 1) view.style.setWidth(style);
+
+    if(index == 0) view.style.setHeight((int) dpToPx(style));
+    if(index == 1) view.style.setWidth((int) dpToPx(style));
+  }
+
+
+  private float dpToPx(int dp){
+    Resources r = DatePickerManager.context.getResources();
+    return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            r.getDisplayMetrics()
+    );
   }
 
   @Override
