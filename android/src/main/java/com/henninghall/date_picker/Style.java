@@ -1,16 +1,12 @@
 package com.henninghall.date_picker;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import com.henninghall.date_picker.wheelFunctions.SetShowCount;
 import com.henninghall.date_picker.wheelFunctions.TextColor;
-
-import org.w3c.dom.Text;
 
 
 class Style {
@@ -46,13 +42,13 @@ class Style {
         View view = pickerView.findViewById(R.id.container);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = width;
-
         view.setLayoutParams(layoutParams);
-//        this.pickerView.setMinimumWidth(width);
     }
 
     public void setHeight(int height) {
-        this.pickerView.setMinimumHeight(height);
+        int showCount = height/80;
+        int adjusted = showCount % 2 == 0 ? showCount + 1 : showCount;
+        pickerView.applyOnAllWheels(new SetShowCount(adjusted));
     }
 
     private boolean validColor(String color){

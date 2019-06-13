@@ -3,9 +3,7 @@ package com.henninghall.date_picker.wheels;
 import com.henninghall.date_picker.Mode;
 import com.henninghall.date_picker.PickerView;
 import com.henninghall.date_picker.Settings;
-import com.henninghall.date_picker.Utils;
 import java.util.Calendar;
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 
 public class AmPmWheel extends Wheel {

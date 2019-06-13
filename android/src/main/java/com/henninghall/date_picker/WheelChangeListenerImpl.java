@@ -22,6 +22,7 @@ public class WheelChangeListenerImpl implements WheelChangeListener {
 
     @Override
     public void onChange(Wheel picker) {
+
         WritableMap event = Arguments.createMap();
         TimeZone timeZone = pickerView.timeZone;
         SimpleDateFormat dateFormat = pickerView.dateFormat;

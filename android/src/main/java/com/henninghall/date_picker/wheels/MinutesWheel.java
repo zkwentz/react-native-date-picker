@@ -3,10 +3,6 @@ package com.henninghall.date_picker.wheels;
 import com.henninghall.date_picker.Mode;
 import com.henninghall.date_picker.PickerView;
 import java.util.Calendar;
-import java.util.Date;
-
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
-
 
 public class MinutesWheel extends Wheel {
 

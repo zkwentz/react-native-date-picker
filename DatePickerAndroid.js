@@ -1,26 +1,35 @@
 import React from 'react';
-import { View, DatePickerIOS, requireNativeComponent, StyleSheet } from 'react-native';
+import { Button, Text, View, DatePickerIOS, requireNativeComponent, StyleSheet } from 'react-native';
 import moment from 'moment'
 
 const NativeDatePicker = requireNativeComponent(`DatePickerManager`, DatePickerAndroid, { nativeOnly: { onChange: true } });
 
+const DEFAULT_HEIGHT = 180
+
 class DatePickerAndroid extends React.PureComponent {
+
+    state = {
+        height: 180,
+    }
 
     static defaultProps = {
         mode: 'datetime',
         minuteInterval: 1,
     };
 
-    render(){
+    render() {
+        const style = [styles.picker, this.props.style, { height: this.state.height }]
+
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
+                <Button title='change' onPress={() => this.setState({ height: this.state.height + 100 })} />
                 <NativeDatePicker
                     {...this.props}
                     date={this._date()}
                     minimumDate={this._minimumDate()}
                     maximumDate={this._maximumDate()}
                     onChange={this._onChange}
-                    style={[styles.picker, this.props.style]}
+                    style={style}
                     utc={this.props.timeZoneOffsetInMinutes !== undefined}
                 />
             </View>
@@ -56,13 +65,10 @@ class DatePickerAndroid extends React.PureComponent {
 
 const styles = StyleSheet.create({
     picker: {
-        width: 350,
-        height: 180,
-        borderWidth: 1,
+        width: 320,
+        height: DEFAULT_HEIGHT,
     },
     container: {
-        borderWidth: 1,
-        borderColor: 'red',
     }
 })
 

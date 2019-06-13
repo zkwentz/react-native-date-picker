@@ -1,6 +1,7 @@
 package com.henninghall.date_picker;
 
 import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -33,8 +34,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 
 public class PickerView extends RelativeLayout {
