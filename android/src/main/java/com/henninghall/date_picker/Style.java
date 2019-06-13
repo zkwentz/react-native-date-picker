@@ -46,7 +46,7 @@ class Style {
     }
 
     public void setHeight(int height) {
-        int showCount = height/80;
+        int showCount = height/65;
         int adjusted = showCount % 2 == 0 ? showCount + 1 : showCount;
         pickerView.applyOnAllWheels(new SetShowCount(adjusted));
     }
