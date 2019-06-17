@@ -1,11 +1,15 @@
 package com.henninghall.date_picker;
 
+import android.content.res.Resources;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.util.TypedValue;
 
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.uimanager.annotations.ReactPropGroup;
 
 import net.time4j.android.ApplicationStarter;
 import org.apache.commons.lang3.LocaleUtils;
@@ -84,6 +88,12 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
     view.setTimeZone(timeZone);
   }
 
+  @ReactPropGroup(names = {"height", "width"}, customType = "Style")
+  public void setStyle(PickerView view, int index, Integer style) {
+    if(index == 0) view.style.setHeight((int) dpToPx(style));
+    if(index == 1) view.style.setWidth((int) dpToPx(style));
+  }
+
   @Override
   protected void onAfterUpdateTransaction(PickerView view) {
    super.onAfterUpdateTransaction(view);
@@ -101,6 +111,14 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
             ).build();
   }
 
+  private float dpToPx(int dp){
+    Resources r = DatePickerManager.context.getResources();
+    return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            r.getDisplayMetrics()
+    );
+  }
 }
 
 
