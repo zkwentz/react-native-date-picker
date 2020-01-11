@@ -76,11 +76,7 @@ dependencies {
     // noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'
 
-    androidTestImplementation('com.wix:detox:+') { 
-        transitive = true
-            exclude('com.martiansoftware:nailgun-server')
-
-        }
+    androidTestImplementation('com.wix:detox:+') { transitive = true }
     androidTestImplementation 'junit:junit:4.12'
 }
 
