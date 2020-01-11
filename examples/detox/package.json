@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "postinstall": "node scripts/postinstall.js && yarn remove-examples",
+    "postinstall": "node scripts/postinstall.js",
     "remove-examples": "rm -rf node_modules/react-native-date-picker/examples",
     "build:ios": "detox build --configuration ios.sim.debug",
     "build:android-debug": "detox build --configuration android.emu.debug",
