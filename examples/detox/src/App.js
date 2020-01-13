@@ -1,20 +1,29 @@
-import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import examples from './examples';
+import React, { Component } from "react";
+import {
+  AppRegistry,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity
+} from "react-native";
+import examples from "./examples";
 
-export default class App extends Component {
-
+class App extends Component {
   state = {
     picker: undefined,
-    backgroundColor: "#ffffff",
-  }
+    backgroundColor: "#ffffff"
+  };
 
   render() {
     return (
       <ScrollView
-        style={[styles.container, { backgroundColor: this.state.backgroundColor }]}
-        contentContainerStyle={styles.content}>
-        <Text style={styles.header}>{!this.state.picker && 'Examples'}</Text>
+        style={[
+          styles.container,
+          { backgroundColor: this.state.backgroundColor }
+        ]}
+        contentContainerStyle={styles.content}
+      >
+        <Text style={styles.header}>{!this.state.picker && "Examples"}</Text>
         {!this.state.picker && this.renderButtons()}
         {!!this.state.picker && this.renderBackButton()}
         {!!this.state.picker && this.renderPicker()}
@@ -22,19 +31,24 @@ export default class App extends Component {
     );
   }
 
-  setBackgroundColor = backgroundColor => this.setState({ backgroundColor })
+  setBackgroundColor = backgroundColor => this.setState({ backgroundColor });
 
   renderPicker = () => {
     const Picker = examples[this.state.picker].component;
-    return <Picker backgroundColor={this.state.backgroundColor} setBackground={this.setBackgroundColor} />
-  }
+    return (
+      <Picker
+        backgroundColor={this.state.backgroundColor}
+        setBackground={this.setBackgroundColor}
+      />
+    );
+  };
 
   renderButtons = () =>
     Object.keys(examples)
       .filter(key => key !== this.state.picker)
-      .map(this.renderButton)
+      .map(this.renderButton);
 
-  renderButton = (key) => (
+  renderButton = key => (
     <TouchableOpacity
       key={key}
       onPress={() => this.setState({ picker: key })}
@@ -42,34 +56,35 @@ export default class App extends Component {
     >
       <Text style={styles.text}>{examples[key].buttonTitle}</Text>
     </TouchableOpacity>
-  )
+  );
 
-  renderBackButton = (key) => (
+  renderBackButton = key => (
     <TouchableOpacity
       onPress={() => this.setState({ picker: undefined })}
-      style={{ margin: 10, position: 'absolute', top: 0, left: 10, }}
+      style={{ margin: 10, position: "absolute", top: 0, left: 10 }}
     >
       <Text style={styles.text}>Back</Text>
     </TouchableOpacity>
-  )
-
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: 15,
-    borderWidth:1,
+    borderWidth: 1
   },
   content: {
-    alignItems: 'center',
+    alignItems: "center"
   },
   text: {
-    color: 'dodgerblue',
-    fontSize: 16,
+    color: "dodgerblue",
+    fontSize: 16
   },
   header: {
-    color: 'black',
+    color: "black",
     fontSize: 22,
-    margin: 20,
+    margin: 20
   }
-})
+});
+
+AppRegistry.registerComponent("example", () => App);
