@@ -6,6 +6,9 @@ try {
 }
 module.exports = {
   resolver: {
-    blacklistRE: metroBundler.createBlacklist([/test\/.*/])
+    blacklistRE: metroBundler.createBlacklist([
+      /test\/.*/,
+      /detox\/node_modules\/.*/
+    ])
   }
 };
