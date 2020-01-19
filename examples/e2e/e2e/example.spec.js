@@ -5,6 +5,6 @@ describe("Example", () => {
 
   it("should show today", async () => {
     await element(by.text("Advanced")).tap();
-    await expect(element(by.text("mode"))).toBeVisible();
+    await expect(element(by.id("minuteWheel"))).toExist();
   });
 });
