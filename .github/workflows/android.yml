@@ -30,11 +30,12 @@ jobs:
         echo y | sudo $ANDROID_HOME/tools/bin/sdkmanager --verbose "system-images;android-27;google_apis;x86"
         $ANDROID_HOME/tools/bin/avdmanager create avd -n emu -k "system-images;android-27;google_apis;x86" -b "x86" -c 1G -d 7 -f
 
-    - name: Install node_modules & Deploy
+    - name: Install node_modules & build 
       if: "!contains(github.event.head_commit.message, '[skip ci]')"
       run: |
         yarn install --frozen-lockfile
         yarn build-detox-android
+      working-directory: ./examples/e2e
 
     - name: Android test
       if: "!contains(github.event.head_commit.message, '[skip ci]')"
@@ -46,10 +47,12 @@ jobs:
         $ANDROID_HOME/emulator/emulator @emu &
         adb wait-for-device; adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'; adb shell wm dismiss-keyguard
         yarn test-detox-android
+      working-directory: ./examples/e2e
 
     - name: Provide videos of failed E2E tests
       if: "!contains(github.event.head_commit.message, '[skip ci]')"
       uses: actions/upload-artifact@master
+      working-directory: ./examples/e2e
       with:
         name: android-failing-e2e-videos
         path: artifacts/
