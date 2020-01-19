@@ -54,5 +54,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: android-failing-e2e-videos
-          path: artifacts/
-        working-directory: ./examples/e2e
+          path: ./examples/e2e/artifacts/
