@@ -3,7 +3,8 @@
   "version": "14.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "npx patch-package",
+    "postinstall": "yarn patch-package && yarn remove-examples",
+    "remove-examples": "rm -rf node_modules/react-native-date-picker/examples/",
     "start": "react-native start",
     "build:ios": "detox build --configuration ios.sim.debug",
     "build:android-debug": "detox build --configuration android.emu.debug",
@@ -19,9 +20,10 @@
     "e2e:android-release": "npm run build:android-release && npm run test:android-release"
   },
   "dependencies": {
+    "patch-package": "^6.2.0",
     "react": "16.8.3",
     "react-native": "0.59.9",
-    "react-native-date-picker": "^2.7.5"
+    "react-native-date-picker": "../../"
   },
   "devDependencies": {
     "detox": "^14.0.1",
