@@ -12,6 +12,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native'
+import DatePicker from 'react-native-date-picker'
 
 class example extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class example extends Component {
         >
           <Text style={{ color: 'blue', marginBottom: 20 }}>Say World</Text>
         </TouchableOpacity>
+        <DatePicker date={new Date()} onDateChange={() => {}} />
       </View>
     )
   }
