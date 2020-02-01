@@ -36,7 +36,7 @@ jobs:
       - name: Build for detox
         working-directory: ./examples/detox
         run: |
-          yarn build:android-debug
+          yarn build:android-ci
 
       - name: Android Emulator
         working-directory: ./examples/detox
@@ -51,5 +51,5 @@ jobs:
 
       - name: Android Detox
         working-directory: ./examples/detox
-        run: yarn start & yarn test:android-debug
+        run: yarn start & yarn test:android-ci
 
