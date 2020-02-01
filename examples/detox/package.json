@@ -3,12 +3,15 @@
   "version": "14.0.1",
   "private": true,
   "scripts": {
+    "postinstall": "npx patch-package",
     "start": "react-native start",
     "build:ios": "detox build --configuration ios.sim.debug",
     "build:android-debug": "detox build --configuration android.emu.debug",
+    "build:android-ci": "detox build --configuration android.ci",
     "build:android-release": "detox build --configuration android.emu.release",
     "test:ios": "detox test --configuration ios.sim.debug",
     "test:android-debug": "detox test --configuration android.emu.debug -l verbose",
+    "test:android-ci": "detox test --configuration android.ci -l verbose",
     "test:android-release": "detox test --configuration android.emu.release -l verbose",
     "test:android-explicit-require": "detox test e2eExplicitRequire -c android.emu.release -l verbose --runner-config e2eExplicitRequire/mocha.opts",
     "e2e:ios": "npm run build:ios && npm run test:ios",
@@ -50,11 +53,17 @@
           "sessionId": "com.wix.demo.react.native"
         }
       },
-      "android.emu.debug": {
+      "android.ci": {
         "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
         "build": "cd android ; ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug ; cd -",
         "type": "android.emulator",
         "name": "emu"
+      },
+      "android.emu.debug": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android ; ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug ; cd -",
+        "type": "android.emulator",
+        "name": "Pixel_2_API_29"
       },
       "android.emu.release": {
         "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
