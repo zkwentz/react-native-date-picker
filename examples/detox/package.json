@@ -3,9 +3,8 @@
   "version": "14.0.1",
   "private": true,
   "scripts": {
-    "postinstall": "yarn patch-package && yarn remove-examples",
-    "remove-examples": "rm -rf node_modules/react-native-date-picker/examples/",
     "start": "react-native start",
+    "postinstall": "cd ../../ && yarn && cd examples/detox",
     "build:ios": "detox build --configuration ios.sim.debug",
     "build:android-debug": "detox build --configuration android.emu.debug",
     "build:android-ci": "detox build --configuration android.ci",
@@ -22,8 +21,7 @@
   "dependencies": {
     "patch-package": "^6.2.0",
     "react": "16.8.3",
-    "react-native": "0.59.9",
-    "react-native-date-picker": "../../"
+    "react-native": "0.59.9"
   },
   "devDependencies": {
     "detox": "^14.0.1",

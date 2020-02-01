@@ -13,7 +13,9 @@
     "url": "git@github.com:henninghall/react-native-date-picker.git"
   },
   "dependencies": {
-    "moment": "^2.22.1"
+    "moment": "^2.22.1",
+    "react": "16.8.3",
+    "react-native": "0.59.9"
   },
   "author": "henninghall",
   "license": "MIT",
