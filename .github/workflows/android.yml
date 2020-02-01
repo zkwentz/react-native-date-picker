@@ -52,3 +52,4 @@ jobs:
       - name: Android Detox
         working-directory: ./examples/detox
         run: yarn start & yarn test:android-debug
+
