@@ -32,6 +32,7 @@ export default class PropSlider extends Component {
 
   renderItem = ({ item, index }) => (
     <TouchableOpacity
+      testID={`${this.props.testID}/${item.name}`}
       key={item.name}
       style={[styles.item, this.getStyle(item)]}
       onPress={this.onPress(index)}

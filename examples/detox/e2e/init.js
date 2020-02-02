@@ -4,13 +4,14 @@ const adapter = require('detox/runners/mocha/adapter')
 
 before(async () => {
   await detox.init(config)
+  await element(by.text('Advanced')).tap()
 })
 
-beforeEach(async function() {
+beforeEach(async function () {
   await adapter.beforeEach(this)
 })
 
-afterEach(async function() {
+afterEach(async function () {
   await adapter.afterEach(this)
 })
 

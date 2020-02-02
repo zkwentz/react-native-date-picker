@@ -1,6 +1,6 @@
-name: Android
+name: Android tests
 
-on: [push]
+on: [push, pull_requests]
 
 jobs:
   build:
@@ -28,17 +28,17 @@ jobs:
           echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name emu --device "Nexus 5X" -k 'system-images;android-29;google_apis;x86'
           $ANDROID_HOME/emulator/emulator -list-avds
 
-      - name: Install node_modules
+      - name: Install npm dependencies
         working-directory: ./examples/detox
         run: |
           yarn install --frozen-lockfile
 
-      - name: Build for detox
+      - name: Build
         working-directory: ./examples/detox
         run: |
           yarn build:android-ci
 
-      - name: Android Emulator
+      - name: Start android emulator
         working-directory: ./examples/detox
         timeout-minutes: 10
         continue-on-error: true
@@ -49,7 +49,7 @@ jobs:
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
 
-      - name: Android Detox
+      - name: Run tests
         working-directory: ./examples/detox
         run: yarn start & yarn test:android-ci
 

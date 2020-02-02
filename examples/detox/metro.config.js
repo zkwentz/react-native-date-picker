@@ -15,7 +15,6 @@ module.exports = {
   resolver: {
     blacklistRE: blacklist([
       new RegExp(`${reactNativeLib}/node_modules/react-native/.*`),
-      new RegExp(`${reactNativeLib}/examples/advanced/.*`),
     ]),
   },
   transformer: {

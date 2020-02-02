@@ -7,6 +7,7 @@ export default class extends Component {
   render() {
     return (
       <PropSlider
+        testID={"mode"}
         selectedProp={this.props.selected}
         onSelect={this.props.onChange}
         data={data}
