@@ -20,7 +20,6 @@
     "e2e:android-release": "npm run build:android-release && npm run test:android-release"
   },
   "dependencies": {
-    "patch-package": "^6.2.0",
     "react": "16.8.3",
     "react-native": "0.59.9"
   },
