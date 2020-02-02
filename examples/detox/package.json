@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "postinstall": "cd ../../ && yarn && cd examples/detox",
+    "postinstall": "yarn make-example-runnable",
+    "make-example-runnable": "(cd ../../ && npm i react react-native --no-save)",
     "build:ios": "detox build --configuration ios.sim.debug",
     "build:android-debug": "detox build --configuration android.emu.debug",
     "build:android-ci": "detox build --configuration android.ci",
