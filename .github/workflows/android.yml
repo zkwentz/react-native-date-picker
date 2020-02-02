@@ -1,9 +1,10 @@
-name: Android tests
+name: Android
 
 on: [push, pull_request]
 
 jobs:
   build:
+    name: Build 
     runs-on: macos-latest
     timeout-minutes: 15
 
@@ -52,4 +53,15 @@ jobs:
       - name: Run tests
         working-directory: ./examples/detox
         run: yarn start & yarn test:android-ci
+        
 
+  test:
+    name: Test
+    needs: build
+    runs-on: macos-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Run tests
+        working-directory: ./examples/detox
+        run: yarn start & yarn test:android-ci
