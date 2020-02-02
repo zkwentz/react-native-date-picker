@@ -1,4 +1,4 @@
-name: Android tests
+name: "Android: build & test"
 
 on: [push, pull_request]
 
