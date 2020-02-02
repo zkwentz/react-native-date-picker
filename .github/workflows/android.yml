@@ -50,11 +50,6 @@ jobs:
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
 
-      - name: Run tests
-        working-directory: ./examples/detox
-        run: yarn start & yarn test:android-ci
-        
-
   test:
     name: Test
     needs: build
