@@ -1,26 +1,28 @@
 import React, { useState } from 'react'
-import { Button, TextInput, Text } from 'react-native'
+import { Button, TextInput, Text, View } from 'react-native'
 
 export default function Scroll(props) {
     const [wheelIndex, setWheelIndex] = useState("0")
     const [scrollTimes, setScrollTimes] = useState("1")
 
     return (
-        <>
-            <Text>Wheel index</Text>
-            <TextInput
-                testID="wheelIndex"
-                style={style}
-                onChangeText={setWheelIndex}
-                value={wheelIndex}
-            />
-            <Text>Scroll times</Text>
-            <TextInput
-                testID="scrollTimes"
-                style={style}
-                onChangeText={setScrollTimes}
-                value={scrollTimes}
-            />
+        <View>
+            <View style={{ flexDirection: "row" }}>
+                <Text>Wheel index</Text>
+                <TextInput
+                    testID="wheelIndex"
+                    style={style}
+                    onChangeText={setWheelIndex}
+                    value={wheelIndex}
+                />
+                <Text>Scroll times</Text>
+                <TextInput
+                    testID="scrollTimes"
+                    style={style}
+                    onChangeText={setScrollTimes}
+                    value={scrollTimes}
+                />
+            </View>
             <Button
                 testID={"doScroll"}
                 title={`Scroll`}
@@ -31,7 +33,7 @@ export default function Scroll(props) {
                 title={`Reset`}
                 onPress={props.reset}
             />
-        </>
+        </View>
     )
 }
 

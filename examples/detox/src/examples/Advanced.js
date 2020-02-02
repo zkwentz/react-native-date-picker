@@ -11,6 +11,7 @@ import TimeZoneOffsetInMinutes from '../propPickers/TimeZoneOffsetInMinutes'
 import PropSlider from '../PropSlider'
 import MinuteInterval from '../propPickers/MinuteInterval'
 import Scroll from '../propPickers/Scroll'
+import CustomPropValue from '../CustomPropValue'
 
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000)
@@ -34,14 +35,14 @@ export const readableDate = date =>
 
 export default class Advanced extends Component {
   state = {
-    chosenDate: getInitialDate(),
+    date: getInitialDate(),
     searchTerm: '',
     textColor: '#000000',
     selectedProp: 'mode',
     locale: 'en-US',
     mode: 'datetime',
-    minDate: defaultMinDate,
-    maxDate: defaultMaxDate,
+    minimumDate: defaultMinDate,
+    maximumDate: defaultMaxDate,
     timeZoneOffsetInMinutes: undefined,
     minuteInterval: 1,
   }
@@ -49,20 +50,23 @@ export default class Advanced extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <CustomPropValue
+          changeProp={({ propName, propValue }) => this.setState({ [propName]: propValue })}
+        />
         <DatePicker
           ref={ref => this.ref = ref}
-          date={this.state.chosenDate}
+          date={this.state.date}
           onDateChange={this.setDate}
           locale={this.state.locale}
           minuteInterval={this.state.minuteInterval}
-          minimumDate={this.state.minDate}
-          maximumDate={this.state.maxDate}
+          minimumDate={this.state.minimumDate}
+          maximumDate={this.state.maximumDate}
           fadeToColor={this.props.backgroundColor}
           textColor={this.state.textColor}
           mode={this.state.mode}
           timeZoneOffsetInMinutes={this.state.timeZoneOffsetInMinutes}
         />
-        <Text testID={"dateOutput"}>{readableDate(this.state.chosenDate)}</Text>
+        <Text testID={"dateOutput"}>{readableDate(this.state.date)}</Text>
         <Text />
         <Text>Change prop: </Text>
         <Text />
@@ -82,7 +86,7 @@ export default class Advanced extends Component {
     {
       name: 'scroll',
       component: (
-        <Scroll scroll={this.scroll} reset={() => this.setState({ chosenDate: getInitialDate() })} />
+        <Scroll scroll={this.scroll} reset={() => this.setState({ date: getInitialDate() })} />
       ),
     },
     {
@@ -117,8 +121,8 @@ export default class Advanced extends Component {
       name: 'date',
       component: (
         <DateChange
-          value={this.state.chosenDate}
-          onChange={chosenDate => this.setState({ chosenDate })}
+          value={this.state.date}
+          onChange={date => this.setState({ date })}
         />
       ),
     },
@@ -135,7 +139,7 @@ export default class Advanced extends Component {
       name: 'minDate',
       component: (
         <MinMaxDateChange
-          value={this.state.minDate}
+          value={this.state.minimumDate}
           onChange={minDate => this.setState({ minDate })}
           defaultDate={defaultMinDate}
         />
@@ -145,7 +149,7 @@ export default class Advanced extends Component {
       name: 'maxDate',
       component: (
         <MinMaxDateChange
-          value={this.state.maxDate}
+          value={this.state.maximumDate}
           onChange={maxDate => this.setState({ maxDate })}
           defaultDate={defaultMaxDate}
         />
@@ -173,7 +177,7 @@ export default class Advanced extends Component {
 
   onSelect = selectedProp => this.setState({ selectedProp })
 
-  setDate = newDate => this.setState({ chosenDate: newDate })
+  setDate = date => this.setState({ date })
 
   scroll = ({ wheelIndex, scrollTimes }) => {
     if (!this.ref) return
@@ -191,7 +195,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 15,
     backgroundColor: 'transparent',
     flex: 1,
   },

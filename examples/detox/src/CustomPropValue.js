@@ -1,38 +1,40 @@
 import React, { useState } from 'react'
-import { Button, TextInput, Text } from 'react-native'
+import { Button, TextInput, Text, View, TouchableOpacity } from 'react-native'
 
 export default function CustomPropValue(props) {
-    const [propName, setPropName] = useState("0")
-    const [propValue, setPropValue] = useState("1")
+    const [propName, setPropName] = useState("")
+    const [propValue, setPropValue] = useState("")
+
+    const getPropValue = () => {
+        if (propValue === "undefined") return undefined
+        return propValue
+    }
 
     return (
-        <>
-            <Text>Prop value</Text>
+        <View style={{
+            flexDirection: 'row',
+            marginBottom: 15,
+        }}>
+            <Text>Prop name</Text>
             <TextInput
-                testID="wheelIndex"
+                testID="propName"
                 style={style}
                 onChangeText={setPropName}
                 value={propName}
             />
-            <Text>Scroll times</Text>
+            <Text>Prop value</Text>
             <TextInput
-                testID="scrollTimes"
+                testID="propValue"
                 style={style}
                 onChangeText={setPropValue}
                 value={propValue}
             />
-            <Button
-                testID={"doScroll"}
-                title={`Scroll`}
-                onPress={() => props.scroll({ wheelIndex: Number.parseInt(propName), scrollTimes: Number.parseInt(propValue) })}
-            />
-            <Button
-                testID={"reset"}
-                title={`Reset`}
-                onPress={props.reset}
-            />
-        </>
+            <TouchableOpacity
+                testID={"changeProp"}
+                onPress={() => props.changeProp({ propName, propValue: getPropValue() })}
+            ><Text>Change</Text></TouchableOpacity>
+        </View>
     )
 }
 
-const style = { height: 40, borderColor: 'gray', borderWidth: 1 }
+const style = { height: 30, borderColor: 'gray', borderWidth: 0.5, margin: 2 }
