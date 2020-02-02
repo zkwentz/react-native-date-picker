@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, UIManager, findNodeHandle } from 'react-native'
 import DatePicker from 'react-native-date-picker'
 import DateChange from '../propPickers/DateChange'
 import FadeToColor from '../propPickers/FadeToColor'
@@ -10,26 +10,31 @@ import TextColor from '../propPickers/TextColor'
 import TimeZoneOffsetInMinutes from '../propPickers/TimeZoneOffsetInMinutes'
 import PropSlider from '../PropSlider'
 import MinuteInterval from '../propPickers/MinuteInterval'
+import Scroll from '../propPickers/Scroll'
 
-Date.prototype.addHours = function(h) {
+Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000)
   return this
 }
 
-export const defaultMinDate = new Date().addHours(-24 * 5)
-export const defaultMaxDate = new Date().addHours(24 * 5)
+const getInitialDate = () => new Date(Date.UTC(2000, 0));
+
+export const defaultMinDate = getInitialDate().addHours(-24 * 5)
+export const defaultMaxDate = getInitialDate().addHours(24 * 5)
 
 export const readableDate = date =>
   date
     ? date
-        .toISOString()
-        .substr(0, 19)
-        .replace('T', ' ')
+      .toISOString()
+      .substr(0, 19)
+      .replace('T', ' ')
     : 'undefined'
+
+
 
 export default class Advanced extends Component {
   state = {
-    chosenDate: new Date(),
+    chosenDate: getInitialDate(),
     searchTerm: '',
     textColor: '#000000',
     selectedProp: 'mode',
@@ -45,6 +50,7 @@ export default class Advanced extends Component {
     return (
       <View style={styles.container}>
         <DatePicker
+          ref={ref => this.ref = ref}
           date={this.state.chosenDate}
           onDateChange={this.setDate}
           locale={this.state.locale}
@@ -56,11 +62,12 @@ export default class Advanced extends Component {
           mode={this.state.mode}
           timeZoneOffsetInMinutes={this.state.timeZoneOffsetInMinutes}
         />
-        <Text>Picker date: {readableDate(this.state.chosenDate)}</Text>
+        <Text testID={"dateOutput"}>{readableDate(this.state.chosenDate)}</Text>
         <Text />
         <Text>Change prop: </Text>
         <Text />
         <PropSlider
+          testID={"props"}
           selectedProp={this.state.selectedProp}
           onSelect={this.onSelect}
           data={this.propertyList()}
@@ -72,6 +79,12 @@ export default class Advanced extends Component {
   }
 
   propertyList = () => [
+    {
+      name: 'scroll',
+      component: (
+        <Scroll scroll={this.scroll} reset={() => this.setState({ chosenDate: getInitialDate() })} />
+      ),
+    },
     {
       name: 'mode',
       component: (
@@ -154,11 +167,25 @@ export default class Advanced extends Component {
     },
   ]
 
-  selectedPropData = () =>
-    this.propertyList().find(p => p.name === this.state.selectedProp)
+  selectedPropData = () => {
+    return this.propertyList().find(p => p.name === this.state.selectedProp)
+  }
+
   onSelect = selectedProp => this.setState({ selectedProp })
+
   setDate = newDate => this.setState({ chosenDate: newDate })
+
+  scroll = ({ wheelIndex, scrollTimes }) => {
+    if (!this.ref) return
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this.ref),
+      UIManager.getViewManagerConfig("DatePickerManager").Commands.scroll,
+      [wheelIndex, scrollTimes],
+    );
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

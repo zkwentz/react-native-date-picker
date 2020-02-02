@@ -130,7 +130,7 @@ public class PickerView extends RelativeLayout {
     }
 
     // Rounding cal to closest minute interval
-        public Calendar getInitialDate() {
+    public Calendar getInitialDate() {
         Calendar cal = Calendar.getInstance();
         if(minuteInterval <= 1) return cal;
         int exactMinute = Integer.valueOf(minutesWheel.format.format(cal.getTime()));
@@ -232,4 +232,15 @@ public class PickerView extends RelativeLayout {
         return new SimpleDateFormat(getFormatPattern(), locale);
     }
 
+    public void scroll(int wheelIndex, int scrollTimes) {
+        NumberPickerView picker = wheelOrder.getVisibleWheel(wheelIndex).picker;
+        int currentIndex = picker.getValue();
+        int maxValue = picker.getMaxValue();
+        boolean isWrapping = picker.getWrapSelectorWheel();
+        int nextValue = currentIndex + scrollTimes;
+        if(nextValue <= maxValue || isWrapping) {
+            picker.smoothScrollToValue(nextValue % (maxValue + 1));
+        }
+
+    }
 }

@@ -14,7 +14,6 @@
     "test:android-debug": "detox test --configuration android.emu.debug -l verbose",
     "test:android-ci": "detox test --configuration android.ci -l verbose",
     "test:android-release": "detox test --configuration android.emu.release -l verbose",
-    "test:android-explicit-require": "detox test e2eExplicitRequire -c android.emu.release -l verbose --runner-config e2eExplicitRequire/mocha.opts",
     "e2e:ios": "npm run build:ios && npm run test:ios",
     "e2e:android-debug": "npm run build:android-debug && npm run test:android-debug",
     "e2e:android-release": "npm run build:android-release && npm run test:android-release"
