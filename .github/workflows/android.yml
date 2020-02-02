@@ -1,10 +1,10 @@
-name: Android
+name: Android tests
 
 on: [push, pull_request]
 
 jobs:
-  build:
-    name: Build 
+  build_and_test:
+    name: Build & test
     runs-on: macos-latest
     timeout-minutes: 15
 
@@ -49,14 +49,7 @@ jobs:
           $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
-
-  test:
-    name: Test
-    needs: build
-    runs-on: macos-latest
-    timeout-minutes: 15
-
-    steps:
+  
       - name: Run tests
         working-directory: ./examples/detox
         run: yarn start & yarn test:android-ci
