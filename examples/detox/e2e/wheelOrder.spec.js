@@ -34,15 +34,15 @@ const scrollWheelWithIndexAndExpectDate = async (index, expectedDate) => {
 describe('Wheel order', () => {
 
 
-  describe.only('datetime', () => {
+  describe('datetime', () => {
 
     before(async () => {
+      await setMaximumDate("undefined")
       // await setMinimumDate("undefined")
-      // await setMaximumDate("undefined")
       await setMode("datetime")
     })
 
-    it.only('US', async () => {
+    it('US', async () => {
       await setLocale("en-US")
       await scrollWheelWithIndexAndExpectDate(0, "2000-01-02 00:00:00")
       await scrollWheelWithIndexAndExpectDate(1, "2000-01-01 01:00:00")
@@ -69,15 +69,16 @@ describe('Wheel order', () => {
 
     it('US', async () => {
       await setLocale("en-US")
-      await scrollWheelWithIndexAndExpectDate(0, "2000-01-02 00:00:00")
-      await scrollWheelWithIndexAndExpectDate(1, "2000-01-01 01:00:00")
-      await scrollWheelWithIndexAndExpectDate(2, "2000-01-01 00:01:00")
-      await scrollWheelWithIndexAndExpectDate(3, "2000-01-01 12:00:00")
-
+      await scrollWheelWithIndexAndExpectDate(0, "2000-02-01 00:00:00")
+      await scrollWheelWithIndexAndExpectDate(1, "2000-01-02 00:00:00")
+      await scrollWheelWithIndexAndExpectDate(2, "2001-01-01 00:00:00")
     })
 
     it('UK', async () => {
-
+      await setLocale("en-GB")
+      await scrollWheelWithIndexAndExpectDate(0, "2000-01-02 00:00:00")
+      await scrollWheelWithIndexAndExpectDate(1, "2000-02-01 00:00:00")
+      await scrollWheelWithIndexAndExpectDate(2, "2001-01-01 00:00:00")
     })
 
     it('Korean', async () => {

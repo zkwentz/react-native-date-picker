@@ -37,4 +37,4 @@ export default function CustomPropValue(props) {
     )
 }
 
-const style = { height: 30, borderColor: 'gray', borderWidth: 0.5, margin: 2 }
+const style = { height: 40, borderColor: 'gray', borderWidth: 0.5, margin: 2 }
