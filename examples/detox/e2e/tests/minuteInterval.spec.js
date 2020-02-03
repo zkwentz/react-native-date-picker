@@ -4,6 +4,11 @@ const scrollMinuteWheel = () => scrollWheel(2, 1)
 
 describe('minute interval', () => {
 
+    before(async () => {
+        await device.reloadReactNative()
+        await element(by.text('Advanced')).tap()
+    })
+
     it('1 minute (default)', async () => {
         await setMinuteInterval(1)
         await scrollMinuteWheel()

@@ -5,12 +5,11 @@ const { reset } = require("./utils")
 
 before(async () => {
   await detox.init(config)
-  await element(by.text('Advanced')).tap()
 })
 
 beforeEach(async function () {
-  await adapter.beforeEach(this)
   await reset()
+  await adapter.beforeEach(this)
 })
 
 afterEach(async function () {

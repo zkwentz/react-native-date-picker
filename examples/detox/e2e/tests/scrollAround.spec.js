@@ -2,6 +2,11 @@ const { scrollWheel, expectDate } = require("../utils")
 
 describe('scroll around', () => {
 
+    before(async () => {
+        await device.reloadReactNative()
+        await element(by.text('Advanced')).tap()
+    })
+
     it('Hour wheel should scroll all way around and switch AM/PM when passing 12', async () => {
         await scrollWheel(1, 5)
         await expectDate("2000-01-01 05:00:00")

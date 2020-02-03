@@ -4,6 +4,8 @@ const { scrollWheelWithIndexAndExpectDate, setMode, setLocale, setMaximumDate } 
 describe('Wheel order', () => {
 
   before(async () => {
+    await device.reloadReactNative()
+    await element(by.text('Advanced')).tap()
     await setMaximumDate("undefined")
   })
 

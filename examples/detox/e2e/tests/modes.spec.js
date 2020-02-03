@@ -1,6 +1,11 @@
 
 describe('Modes', () => {
 
+  before(async () => {
+    await device.reloadReactNative()
+    await element(by.text('Advanced')).tap()
+  })
+
   it('datetime', async () => {
     await element(by.id('mode/datetime')).tap()
 
