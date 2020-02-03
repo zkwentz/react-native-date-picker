@@ -1,3 +1,4 @@
+const { setMode } = require("../utils")
 
 describe('Modes', () => {
 
@@ -7,7 +8,7 @@ describe('Modes', () => {
   })
 
   it('datetime', async () => {
-    await element(by.id('mode/datetime')).tap()
+    await setMode("datetime")
 
     await expect(element(by.id('day'))).toBeVisible()
     await expect(element(by.id('minutes'))).toBeVisible()
@@ -19,7 +20,7 @@ describe('Modes', () => {
   })
 
   it('date', async () => {
-    await element(by.id('mode/date')).tap()
+    await setMode("date")
 
     await expect(element(by.id('month'))).toBeVisible()
     await expect(element(by.id('date'))).toBeVisible()
@@ -31,7 +32,7 @@ describe('Modes', () => {
   })
 
   it('time', async () => {
-    await element(by.id('mode/time')).tap()
+    await setMode("time")
 
     await expect(element(by.id('minutes'))).toBeVisible()
     await expect(element(by.id('hour'))).toBeVisible()
