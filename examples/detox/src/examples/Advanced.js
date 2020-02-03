@@ -18,12 +18,12 @@ Date.prototype.addHours = function (h) {
   return this
 }
 
-const getInitialDate = () => new Date(Date.UTC(2000, 0));
+const getInitialDate = () => new Date(2000, 0, 1, 0, 0);
 
 export const defaultMinDate = getInitialDate().addHours(-24 * 5)
 export const defaultMaxDate = getInitialDate().addHours(24 * 5)
 
-export const readableDate = date =>
+export const readableUtcDate = date =>
   date
     ? date
       .toISOString()
@@ -31,7 +31,15 @@ export const readableDate = date =>
       .replace('T', ' ')
     : 'undefined'
 
+export const readableDate = (d) => {
+  if (!d) return undefined
+  return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())} ${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`
+}
 
+
+function pad2(string) {
+  return (`0${string}`).slice(-2)
+}
 
 export default class Advanced extends Component {
   state = {

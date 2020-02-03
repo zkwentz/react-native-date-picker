@@ -27,6 +27,7 @@ const scrollWheelWithIndexAndExpectDate = async (index, expectedDate) => {
     await reset()
 }
 
+exports.setDate = changeProp("date")
 exports.setLocale = changeProp("locale")
 exports.setMinimumDate = changeProp("minimumDate")
 exports.setMaximumDate = changeProp("maximumDate")
