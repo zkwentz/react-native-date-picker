@@ -7,6 +7,7 @@ export default function CustomPropValue(props) {
 
     const getPropValue = () => {
         if (propValue === "undefined") return undefined
+        if (propName === "minuteInterval") return parseInt(propValue)
         return propValue
     }
 

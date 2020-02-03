@@ -1,33 +1,5 @@
+const { scrollWheelWithIndexAndExpectDate, setMode, setLocale, setMaximumDate } = require("../utils")
 
-const expectDate = async (date) => {
-  await expect(element(by.id('dateOutput'))).toHaveText(date)
-}
-
-const reset = () => element(by.id('reset')).tap()
-
-const scrollWheel = async (index) => {
-  await element(by.id('props/scroll')).tap()
-  await element(by.id('wheelIndex')).replaceText(`${index}`)
-  await element(by.id('scrollTimes')).replaceText("1")
-  await element(by.id('doScroll')).tap()
-}
-
-const changeProp = name => async value => {
-  await element(by.id('propName')).replaceText(name)
-  await element(by.id('propValue')).replaceText(value)
-  await element(by.id('changeProp')).tap()
-}
-
-const setLocale = changeProp("locale")
-const setMinimumDate = changeProp("minimumDate")
-const setMaximumDate = changeProp("maximumDate")
-const setMode = changeProp("mode")
-
-const scrollWheelWithIndexAndExpectDate = async (index, expectedDate) => {
-  await scrollWheel(index)
-  await expectDate(expectedDate)
-  await reset()
-}
 
 describe('Wheel order', () => {
 
