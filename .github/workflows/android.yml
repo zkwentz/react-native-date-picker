@@ -6,7 +6,7 @@ jobs:
   build_and_test:
     name: Build & test
     runs-on: macos-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -41,7 +41,6 @@ jobs:
 
       - name: Start android emulator
         working-directory: ./examples/detox
-        timeout-minutes: 10
         continue-on-error: true
         run: |
           echo "Starting emulator"
