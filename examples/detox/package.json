@@ -12,8 +12,8 @@
     "build:android-release": "detox build --configuration android.emu.release",
     "test:ios": "detox test --configuration ios.sim.debug",
     "test:android-debug": "detox test --configuration android.emu.debug --take-screenshots failing",
-    "test:android-ci": "detox test --configuration android.ci -l verbose --record-logs failing --record-videos failing --take-screenshots failing",
-    "test:android-release": "detox test --configuration android.emu.release -l verbose",
+    "test:android-ci": "detox test --configuration android.ci --record-logs failing --record-videos failing --take-screenshots failing",
+    "test:android-release": "detox test --configuration android.emu.release",
     "e2e:ios": "npm run build:ios && npm run test:ios",
     "e2e:android-debug": "npm run build:android-debug && npm run test:android-debug",
     "e2e:android-release": "npm run build:android-release && npm run test:android-release"
