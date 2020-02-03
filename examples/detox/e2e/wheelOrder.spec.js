@@ -13,7 +13,6 @@ const scrollWheel = async (index) => {
   await element(by.id('doScroll')).tap()
 }
 
-
 const changeProp = name => async value => {
   await element(by.id('propName')).replaceText(name)
   await element(by.id('propValue')).replaceText(value)
@@ -23,7 +22,6 @@ const changeProp = name => async value => {
 const setLocale = changeProp("locale")
 const setMinimumDate = changeProp("minimumDate")
 const setMaximumDate = changeProp("maximumDate")
-
 const setMode = changeProp("mode")
 
 const scrollWheelWithIndexAndExpectDate = async (index, expectedDate) => {
@@ -33,12 +31,13 @@ const scrollWheelWithIndexAndExpectDate = async (index, expectedDate) => {
 
 describe('Wheel order', () => {
 
+  before(async () => {
+    await setMaximumDate("undefined")
+  })
 
   describe('datetime', () => {
 
     before(async () => {
-      await setMaximumDate("undefined")
-      // await setMinimumDate("undefined")
       await setMode("datetime")
     })
 
@@ -59,7 +58,6 @@ describe('Wheel order', () => {
     })
 
   })
-
 
   describe('date', () => {
 
@@ -82,7 +80,10 @@ describe('Wheel order', () => {
     })
 
     it('Korean', async () => {
-
+      await setLocale("ko-KR")
+      await scrollWheelWithIndexAndExpectDate(0, "2001-01-01 00:00:00")
+      await scrollWheelWithIndexAndExpectDate(1, "2000-02-01 00:00:00")
+      await scrollWheelWithIndexAndExpectDate(2, "2000-01-02 00:00:00")
     })
 
   })
