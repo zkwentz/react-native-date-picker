@@ -53,10 +53,12 @@ jobs:
 
       - name: Run tests
         working-directory: ./examples/detox
+        continue-on-error: true
         run: yarn start & yarn test:android-ci
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
+        if: failure()
         with:
           name: my-artifact
           path: ./examples/detox/artifacts
