@@ -2,7 +2,7 @@ const { setDate, scrollWheel, expectDate, setMinimumDate, setMode } = require(".
 
 const oneMinuteBeforeJanuary2 = new Date(2000, 0, 1, 23, 59, 0);
 
-describe('minimum date', () => {
+describe('Minimum date', () => {
 
     before(async () => {
         await device.reloadReactNative()

@@ -4,7 +4,7 @@ const initialDate = new Date(2000, 0, 1, 0, 0);
 const secondOfJanuary = new Date(2000, 0, 2, 0, 0);
 const secondOfJanuary2001 = new Date(2001, 0, 2, 0, 0);
 
-describe('maximum date', () => {
+describe('Maximum date', () => {
 
     before(async () => {
         await device.reloadReactNative()

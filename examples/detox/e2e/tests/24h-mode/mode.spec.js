@@ -1,6 +1,6 @@
 const { setMode } = require("../../utils")
 
-describe('Modes', () => {
+describe('Modes - 24h', () => {
 
     before(async () => {
         await device.reloadReactNative()

@@ -2,7 +2,7 @@ const { scrollWheel, expectDate, setMinuteInterval } = require("../utils")
 
 const scrollMinuteWheel = () => scrollWheel(2, 1)
 
-describe('minute interval', () => {
+describe('Minute interval', () => {
 
     before(async () => {
         await device.reloadReactNative()

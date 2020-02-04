@@ -1,7 +1,7 @@
 const { scrollWheel, expectDate } = require("../utils")
 
 
-describe('scroll around', () => {
+describe('Scroll around', () => {
 
     before(async () => {
         await device.reloadReactNative()
