@@ -49,13 +49,9 @@ jobs:
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
   
-      - name: Starting metro bundler
-        working-directory: ./examples/detox
-        run: yarn start
-      
       - name: Run tests
         working-directory: ./examples/detox
-        run: yarn test:android-ci
+        run: yarn start && yarn test:android-ci
         
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
