@@ -8,14 +8,12 @@ describe('Scroll around', () => {
         await element(by.text('Advanced')).tap()
     })
 
-    it('Hour wheel should scroll all way around and switch AM/PM when passing 12', async () => {
+    it.only('Hour wheel should scroll all way around and switch AM/PM when passing 12', async () => {
         await scroll3HoursAndExpect("2000-01-01 03:00:00")
         await scroll3HoursAndExpect("2000-01-01 06:00:00")
         await scroll3HoursAndExpect("2000-01-01 09:00:00")
         await scrollWheel(1, 2)
         await expectDate("2000-01-01 11:00:00")
-        await scrollWheel(1, 2)
-        await expectDate("2000-01-01 12:00:00")
         await scrollWheel(1, 2)
         await expectDate("2000-01-01 13:00:00")
         await scroll3HoursAndExpect("2000-01-01 16:00:00")
