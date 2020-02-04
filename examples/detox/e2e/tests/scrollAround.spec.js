@@ -1,5 +1,6 @@
 const { scrollWheel, expectDate } = require("../utils")
 
+
 describe('scroll around', () => {
 
     before(async () => {
@@ -8,16 +9,14 @@ describe('scroll around', () => {
     })
 
     it('Hour wheel should scroll all way around and switch AM/PM when passing 12', async () => {
-        await scrollWheel(1, 5)
-        await expectDate("2000-01-01 05:00:00")
-        await scrollWheel(1, 5)
-        await expectDate("2000-01-01 10:00:00")
-        await scrollWheel(1, 5)
-        await expectDate("2000-01-01 15:00:00")
-        await scrollWheel(1, 5)
-        await expectDate("2000-01-01 20:00:00")
-        await scrollWheel(1, 5)
-        await expectDate("2000-01-01 01:00:00")
+        await scroll3HoursAndExpect("2000-01-01 03:00:00")
+        await scroll3HoursAndExpect("2000-01-01 06:00:00")
+        await scroll3HoursAndExpect("2000-01-01 09:00:00")
+        await scroll3HoursAndExpect("2000-01-01 12:00:00")
+        await scroll3HoursAndExpect("2000-01-01 15:00:00")
+        await scroll3HoursAndExpect("2000-01-01 18:00:00")
+        await scroll3HoursAndExpect("2000-01-01 21:00:00")
+        await scroll3HoursAndExpect("2000-01-01 00:00:00")
     })
 
     it('Minute wheel should be possible to scroll all way around', async () => {
@@ -34,4 +33,10 @@ describe('scroll around', () => {
         await expectDate("2000-01-01 00:00:00")
     })
 
+    const scroll3HoursAndExpect = async (date) => {
+        await scrollWheel(1, 3)
+        await expectDate(date)
+    }
+
 })
+
