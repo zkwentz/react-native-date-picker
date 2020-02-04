@@ -51,7 +51,7 @@ jobs:
   
       - name: Run tests
         working-directory: ./examples/detox
-        run: yarn start && yarn test:android-ci
+        run: yarn start & yarn test:android-ci
         
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
