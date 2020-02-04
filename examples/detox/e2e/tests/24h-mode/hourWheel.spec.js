@@ -1,4 +1,4 @@
-const { scrollWheel, expectDate } = require("../utils")
+const { scrollWheel, expectDate } = require("../../utils")
 
 
 describe('Hour wheel', () => {
