@@ -56,8 +56,8 @@ jobs:
         run: yarn start & yarn test:android-ci
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v1
         working-directory: ./examples/detox
+        uses: actions/upload-artifact@v1
         with:
           name: my-artifact
           path: artifacts
