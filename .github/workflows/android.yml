@@ -49,15 +49,14 @@ jobs:
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
   
-      - run: mkdir -p ./examples/detox/artifacts
-
       - name: Run tests
         working-directory: ./examples/detox
         run: yarn start & yarn test:android-ci
 
+      - run: mkdir -p ./examples/detox/artifacts
+
       - name: Upload artifacts
-        working-directory: ./examples/detox
         uses: actions/upload-artifact@v1
         with:
           name: my-artifact
-          path: artifacts
+          path: ./examples/detox/artifacts
