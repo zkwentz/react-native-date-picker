@@ -6,20 +6,17 @@
     "start": "react-native start",
     "postinstall": "yarn make-example-runnable",
     "make-example-runnable": "(cd ../../ && npm i react react-native --no-save)",
-    "build:ios": "detox build --configuration ios.sim.debug",
-    "build:android-debug": "detox build --configuration android.emu.debug",
+    "build:ios": "detox build --configuration ios.debug",
+    "build:android-debug": "detox build --configuration android.debug",
     "build:android-ci": "detox build --configuration android.ci",
-    "build:android-release": "detox build --configuration android.emu.release",
-    "test:ios": "detox test --configuration ios.sim.debug",
+    "test:ios": "detox test --configuration ios.debug",
     "set-time-format": "adb shell settings put system time_12_24",
     "test:android-24h-mode": "yarn set-time-format 24 && yarn test:android-debug e2e/tests/24h-mode/*.spec.js",
-    "test:android-24h-mode-ci": "yarn set-time-format 24 && yarn test:android-ci e2e/tests/24h-mode/*.spec.js",
-    "test:android-debug": "detox test --configuration android.emu.debug --take-screenshots failing",
-    "test:android-ci": "detox test --configuration android.ci --record-logs failing --record-videos failing --take-screenshots failing e2e/tess/*.spec.js",
-    "test:android-release": "detox test --configuration android.emu.release",
-    "e2e:ios": "npm run build:ios && npm run test:ios",
-    "e2e:android-debug": "npm run build:android-debug && npm run test:android-debug",
-    "e2e:android-release": "npm run build:android-release && npm run test:android-release"
+    "test:android-24h-mode-ci": "yarn set-time-format 24 && yarn test:android-ci e2e/tests/24h-mode/*.spec.js --record-logs failing --record-videos failing --take-screenshots failing",
+    "test:android-12h-mode": "yarn set-time-format 12 && detox test --configuration android.debug e2e/tests/*.spec.js",
+    "test:android-12h-mode-ci": "yarn set-time-format 12 && detox test --configuration android.ci e2e/tests/*.spec.js --record-logs failing --record-videos failing --take-screenshots failing",
+    "test:android": "yarn test:android-12h-mode && test:android-24h-mode",
+    "test:android-ci": "yarn test:android-12h-mode-ci && test:android-24h-mode-ci"
   },
   "dependencies": {
     "react": "16.8.3",
@@ -33,27 +30,17 @@
     "test-runner": "mocha",
     "runner-config": "e2e/mocha.opts",
     "configurations": {
-      "ios.sim.release": {
+      "ios.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/example.app",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project ios/example.xcodeproj -UseNewBuildSystem=NO -scheme example -configuration Release -sdk iphonesimulator -derivedDataPath ios/build -quiet",
         "type": "ios.simulator",
         "name": "iPhone X"
       },
-      "ios.sim.debug": {
+      "ios.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/example.app",
         "build": "xcodebuild -project ios/example.xcodeproj -UseNewBuildSystem=NO -scheme example -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone X"
-      },
-      "ios.none": {
-        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/example.app",
-        "build": "xcodebuild -project ios/example.xcodeproj -UseNewBuildSystem=NO -scheme example -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
-        "type": "ios.none",
-        "name": "iPhone X",
-        "session": {
-          "server": "ws://localhost:8099",
-          "sessionId": "com.wix.demo.react.native"
-        }
       },
       "android.ci": {
         "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
@@ -61,17 +48,11 @@
         "type": "android.emulator",
         "name": "emu"
       },
-      "android.emu.debug": {
+      "android.debug": {
         "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
         "build": "cd android ; ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug ; cd -",
         "type": "android.emulator",
         "name": "Pixel_2_API_29"
-      },
-      "android.emu.release": {
-        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
-        "build": "cd android ; ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release ; cd -",
-        "type": "android.emulator",
-        "name": "emu"
       }
     }
   }

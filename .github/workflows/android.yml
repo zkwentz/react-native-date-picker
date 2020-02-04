@@ -57,10 +57,6 @@ jobs:
         working-directory: ./examples/detox
         run: yarn test:android-ci
         
-      - name: Run tests (24h mode) 
-        working-directory: ./examples/detox
-        run: yarn test:android-24h-mode-ci
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v1
         if: failure()
