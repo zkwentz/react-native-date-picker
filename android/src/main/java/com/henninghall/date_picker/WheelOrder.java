@@ -11,30 +11,33 @@ public class WheelOrder
 {
 
     private final HashMap<WheelType, Wheel> wheelPerWheelType;
-    private PickerView pickerView;
+    private final PickerView pickerView;
+    private Wheels wheels;
     private ArrayList<WheelType> orderedWheels;
 
-    WheelOrder(final PickerView view) {
-        this.pickerView = view;
+
+    WheelOrder(final Wheels wheels, PickerView pickerView) {
+        this.wheels = wheels;
+        this.pickerView = pickerView;
         this.wheelPerWheelType = new HashMap<WheelType, Wheel>() {{
-            put(WheelType.DAY, pickerView.dayWheel);
-            put(WheelType.YEAR, pickerView.yearWheel);
-            put(WheelType.MONTH, pickerView.monthWheel);
-            put(WheelType.DATE, pickerView.dateWheel);
-            put(WheelType.HOUR, pickerView.hourWheel);
-            put(WheelType.MINUTE, pickerView.minutesWheel);
-            put(WheelType.AM_PM, pickerView.ampmWheel);
+            put(WheelType.DAY, WheelOrder.this.wheels.dayWheel);
+            put(WheelType.YEAR, WheelOrder.this.wheels.yearWheel);
+            put(WheelType.MONTH, WheelOrder.this.wheels.monthWheel);
+            put(WheelType.DATE, WheelOrder.this.wheels.dateWheel);
+            put(WheelType.HOUR, WheelOrder.this.wheels.hourWheel);
+            put(WheelType.MINUTE, WheelOrder.this.wheels.minutesWheel);
+            put(WheelType.AM_PM, WheelOrder.this.wheels.ampmWheel);
         }};
     }
 
     private void updateAllWheels(final Locale locale) {
         try {
             this.orderedWheels = getOrderedWheels(locale);
-            pickerView.wheelsWrapper.removeAllViews();
+            pickerView.removeAllWheels();
             for (int i = 0; i < wheelPerWheelType.size(); i++) {
                 Wheel w = getWheels(i);
                 if(w.visible()) {
-                    pickerView.wheelsWrapper.addView(w.picker);
+                    pickerView.addWheel(w.picker);
                 }
             }
 
@@ -43,10 +46,9 @@ public class WheelOrder
         }
     }
 
-
     void update(final Locale locale) {
         updateAllWheels(locale);
-        pickerView.emptyWheelUpdater.update();
+        wheels.emptyWheelUpdater.update();
     }
 
     private Wheel getWheels(int index){
@@ -57,7 +59,7 @@ public class WheelOrder
         return getVisibleWheels().get(index);
     }
 
-    private ArrayList<Wheel> getVisibleWheels() {
+    ArrayList<Wheel> getVisibleWheels() {
         ArrayList<Wheel> visibleOrderedWheels = new ArrayList<>();
         for (WheelType wheelType : orderedWheels){
             Wheel wheel = wheelPerWheelType.get(wheelType);

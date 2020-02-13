@@ -1,6 +1,5 @@
 package com.henninghall.date_picker;
 
-import android.os.Build;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -9,72 +8,138 @@ import com.henninghall.date_picker.wheelFunctions.Refresh;
 import com.henninghall.date_picker.wheelFunctions.SetDate;
 import com.henninghall.date_picker.wheelFunctions.UpdateVisibility;
 import com.henninghall.date_picker.wheelFunctions.WheelFunction;
-import com.henninghall.date_picker.wheels.AmPmWheel;
-import com.henninghall.date_picker.wheels.DateWheel;
-import com.henninghall.date_picker.wheels.DayWheel;
-import com.henninghall.date_picker.wheels.HourWheel;
-import com.henninghall.date_picker.wheels.MinutesWheel;
-import com.henninghall.date_picker.wheels.MonthWheel;
 import com.henninghall.date_picker.wheels.Wheel;
-import com.henninghall.date_picker.wheels.YearWheel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 
 public class PickerView extends RelativeLayout {
 
-    public LinearLayout wheelsWrapper;
-    public HourWheel hourWheel;
-    public DayWheel dayWheel;
-    public MinutesWheel minutesWheel;
-    public AmPmWheel ampmWheel;
-    public int minuteInterval = 1;
-    public Locale locale;
-    public Mode mode;
-    public Style style;
-    public DateWheel dateWheel;
-    public MonthWheel monthWheel;
-    public YearWheel yearWheel;
-    private WheelOrder wheelOrder;
-    EmptyWheelUpdater emptyWheelUpdater;
-    public boolean requireDisplayValueUpdate = true;
-    public TimeZone timeZone = TimeZone.getDefault();
-    private DateBoundary minDate;
-    private DateBoundary maxDate;
+    private final View rootView = inflate(getContext(), R.layout.datepicker_view, this);
+    private final Style style;
     private WheelChangeListener onWheelChangeListener = new WheelChangeListenerImpl(this);
+    private Wheels wheels;
+    private LinearLayout wheelsWrapper;
+
+    private State state;
+
+    public ArrayList<String> updateProps = new ArrayList<>();
 
     public PickerView() {
         super(DatePickerManager.context);
-
-        View rootView = inflate(getContext(), R.layout.datepicker_view, this);
+        state = new State();
         style = new Style(this);
-
-        locale = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? Locale.forLanguageTag("en") : Locale.getDefault();
-
-        wheelsWrapper = (LinearLayout) rootView.findViewById(R.id.wheelsWrapper);
+        wheels = new Wheels(this);
+        wheelsWrapper = (LinearLayout) this.findViewById(R.id.wheelsWrapper);
         wheelsWrapper.setWillNotDraw(false);
+    }
 
-        yearWheel = new YearWheel( this, R.id.year);
-        monthWheel = new MonthWheel( this, R.id.month);
-        dateWheel = new DateWheel( this, R.id.date);
-        dayWheel = new DayWheel( this, R.id.day);
-        minutesWheel = new MinutesWheel( this, R.id.minutes);
-        ampmWheel = new AmPmWheel(this, R.id.ampm);
-        hourWheel = new HourWheel(this, R.id.hour);
+    public State getState() {
+        return state;
+    }
 
-        emptyWheelUpdater = new EmptyWheelUpdater(this);
-        wheelOrder = new WheelOrder(this);
+    public void addWheel(View wheel, int index) {
+        wheelsWrapper.addView(wheel, index);
+    }
 
-        changeAmPmWhenPassingMidnightOrNoon();
+    public void addWheel(View wheel) {
+        wheelsWrapper.addView(wheel);
+    }
+
+    public void removeWheel(View wheel) {
+        wheelsWrapper.removeView(wheel);
+    }
+
+    public void removeAllWheels() {
+        wheelsWrapper.removeAllViews();
+    }
+
+    protected String getDateString(){
+        return wheels.getDateString();
+    }
+
+    public View getRootView(){
+        return rootView;
+    }
+
+    public void updateDate() {
+        applyOnAllWheels(new SetDate(state.getDate()));
+    }
+
+    public Collection<Wheel> getVisibleWheels() {
+        Collection<Wheel> visibleWheels = new ArrayList<>();
+        for (Wheel wheel: wheels.getAll()) if (wheel.visible()) visibleWheels.add(wheel);
+        return visibleWheels;
+    }
+
+    public void applyOnAllWheels(WheelFunction function) {
+        for (Wheel wheel: wheels.getAll()) function.apply(wheel);
+    }
+
+    public void applyOnVisibleWheels(WheelFunction function) {
+        for (Wheel wheel: getVisibleWheels()) function.apply(wheel);
+    }
+
+    public WheelChangeListener getListener() {
+        return onWheelChangeListener;
+    }
+
+    protected SimpleDateFormat getDateFormat() {
+        return new SimpleDateFormat(wheels.getFormatPattern(), state.getLocale());
+    }
+
+    public void update() {
+
+        if(updateProps.contains("fadeToColor")) {
+            style.updateFadeToColor();
+        }
+
+        if(updateProps.contains("textColor")) {
+            style.updateTextColor();
+        }
+
+        if(updateProps.contains("mode")) {
+            applyOnAllWheels(new UpdateVisibility());
+        }
+
+        if(updateProps.contains("height")) {
+            style.updateHeight();
+        }
+
+        if(updateProps.contains("mode") || updateProps.contains("locale")) {
+            wheels.updateWheelOrder(state.getLocale());
+        }
+
+        ArrayList<String> nonRefreshingProps = new ArrayList<String>(){{
+            add("date");
+            add("fadeToColor");
+            add("textColor");
+        }};
+        updateProps.removeAll(nonRefreshingProps);
+
+        if(updateProps.size() != 0) {
+            applyOnAllWheels(new Refresh());
+        }
+
+        updateDate();
+
+        updateProps = new ArrayList<>();
+    }
+
+
+    public void scroll(int wheelIndex, int scrollTimes) {
+        NumberPickerView picker = wheels.getVisibleWheels(wheelIndex).picker;
+        int currentIndex = picker.getValue();
+        int maxValue = picker.getMaxValue();
+        boolean isWrapping = picker.getWrapSelectorWheel();
+        int nextValue = currentIndex + scrollTimes;
+        if(nextValue <= maxValue || isWrapping) {
+            picker.smoothScrollToValue(nextValue % (maxValue + 1));
+        }
     }
 
     private final Runnable measureAndLayout = new Runnable() {
@@ -87,159 +152,9 @@ public class PickerView extends RelativeLayout {
         }
     };
 
-    private void changeAmPmWhenPassingMidnightOrNoon(){
-        hourWheel.picker.setOnValueChangeListenerInScrolling(new NumberPickerView.OnValueChangeListenerInScrolling() {
-            @Override
-            public void onValueChangeInScrolling(NumberPickerView picker, int oldVal, int newVal) {
-                if(Settings.usesAmPm()){
-                    String oldValue = hourWheel.getValueAtIndex(oldVal);
-                    String newValue = hourWheel.getValueAtIndex(newVal);
-                    boolean passingNoonOrMidnight = (oldValue.equals("12") && newValue.equals("11")) || oldValue.equals("11") && newValue.equals("12");
-                    if (passingNoonOrMidnight) ampmWheel.picker.smoothScrollToValue((ampmWheel.picker.getValue() + 1) % 2,false);
-                }
-            }
-        });
-    }
-
-
-    public void setMinimumDate(String date) {
-        minDate = new DateBoundary(this, date);
-        requireDisplayValueUpdate = true;
-    }
-
-    public void setMaximumDate(String date) {
-        maxDate = new DateBoundary(this, date);
-        requireDisplayValueUpdate = true;
-    }
-
-    public void setDate(String isoDate) {
-        Calendar cal = Utils.isoToCalendar(isoDate, timeZone);
-        applyOnAllWheels(new SetDate(cal));
-    }
-
-    public void setLocale(Locale locale) {
-        this.locale = locale;
-        wheelOrder.update(locale);
-        requireDisplayValueUpdate = true;
-    }
-
-    public void setMinuteInterval(int interval) {
-        this.minuteInterval = interval;
-        requireDisplayValueUpdate = true;
-    }
-
-    // Rounding cal to closest minute interval
-    public Calendar getInitialDate() {
-        Calendar cal = Calendar.getInstance();
-        if(minuteInterval <= 1) return cal;
-        int exactMinute = Integer.valueOf(minutesWheel.format.format(cal.getTime()));
-        int diffSinceLastInterval = exactMinute % minuteInterval;
-        int diffAhead = minuteInterval - diffSinceLastInterval;
-        int diffBehind= -diffSinceLastInterval;
-        boolean closerToPrevious = minuteInterval / 2 > diffSinceLastInterval;
-        int diffToExactValue = closerToPrevious ? diffBehind : diffAhead;
-        cal.add(Calendar.MINUTE, diffToExactValue);
-        return (Calendar) cal.clone();
-    }
-
-    private String getDateFormatPattern(){
-        if(mode == Mode.date){
-            return wheelOrder.getVisibleWheel(0).getFormatPattern() + " "
-                    + wheelOrder.getVisibleWheel(1).getFormatPattern() + " "
-                    + wheelOrder.getVisibleWheel(2).getFormatPattern();
-        }
-        return dayWheel.getFormatPattern();
-    }
-
-    private String getFormatPattern() {
-        return this.getDateFormatPattern() + " "
-                + hourWheel.getFormatPattern() + " "
-                + minutesWheel.getFormatPattern()
-                + ampmWheel.getFormatPattern();
-    }
-
-    public String getDateString() {
-        String dateString = (mode == Mode.date)
-                ? wheelOrder.getVisibleWheel(0).getValue() + " "
-                + wheelOrder.getVisibleWheel(1).getValue() + " "
-                + wheelOrder.getVisibleWheel(2).getValue()
-                : dayWheel.getValue();
-        return dateString
-                + " " + hourWheel.getValue()
-                + " " + minutesWheel.getValue()
-                + ampmWheel.getValue();
-    }
-
-    public void setMode(Mode mode) {
-        this.mode = mode;
-        applyOnAllWheels(new UpdateVisibility());
-        wheelOrder.update(locale);
-        requireDisplayValueUpdate = true;
-    }
-
-    public Collection<Wheel> getVisibleWheels() {
-        Collection<Wheel> visibleWheels = new ArrayList<>();
-        for (Wheel wheel: getAllWheels()) if (wheel.visible()) visibleWheels.add(wheel);
-        return visibleWheels;
-    }
-
-    public List<Wheel> getAllWheels(){
-        return new ArrayList<>(Arrays.asList(yearWheel, monthWheel, dateWheel, dayWheel, hourWheel, minutesWheel, ampmWheel));
-    }
-
-    public void applyOnAllWheels(WheelFunction function) {
-        for (Wheel wheel: getAllWheels()) function.apply(wheel);
-    }
-
-    public void applyOnVisibleWheels(WheelFunction function) {
-        for (Wheel wheel: getVisibleWheels()) function.apply(wheel);
-    }
-
     @Override
     public void requestLayout() {
         super.requestLayout();
         post(measureAndLayout);
-    }
-
-    public WheelChangeListener getListener() {
-        return onWheelChangeListener;
-    }
-
-    public void updateDisplayValuesIfNeeded() {
-        if(requireDisplayValueUpdate) {
-            applyOnAllWheels(new Refresh());
-            requireDisplayValueUpdate = false;
-        }
-    }
-
-    public void setTimeZone(TimeZone timeZone) {
-        this.timeZone = timeZone;
-        requireDisplayValueUpdate = true;
-    }
-
-    public Calendar getMinimumDate(){
-        if (minDate == null) return null;
-        return minDate.get();
-    }
-
-    public Calendar getMaximumDate(){
-        if (maxDate == null) return null;
-        return maxDate.get();
-    }
-
-    protected SimpleDateFormat getDateFormat() {
-        return new SimpleDateFormat(getFormatPattern(), locale);
-    }
-
-    public void scroll(int wheelIndex, int scrollTimes) {
-        NumberPickerView picker = wheelOrder.getVisibleWheel(wheelIndex).picker;
-        int currentIndex = picker.getValue();
-        int maxValue = picker.getMaxValue();
-        boolean isWrapping = picker.getWrapSelectorWheel();
-        int nextValue = currentIndex + scrollTimes;
-        if(nextValue <= maxValue || isWrapping) {
-            picker.smoothScrollToValue(nextValue % (maxValue + 1));
-        }
-
     }
 }

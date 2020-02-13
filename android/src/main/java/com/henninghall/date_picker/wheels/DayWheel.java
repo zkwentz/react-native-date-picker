@@ -40,8 +40,8 @@ public class DayWheel extends Wheel {
 
     private Calendar getStartCal(){
         Calendar cal;
-        Calendar max = pickerView.getMaximumDate();
-        Calendar min = pickerView.getMinimumDate();
+        Calendar max = state.getMaximumDate();
+        Calendar min = state.getMinimumDate();
         if (min != null) {
             cal = (Calendar) min.clone();
             resetToMidnight(cal);
@@ -50,7 +50,7 @@ public class DayWheel extends Wheel {
             resetToMidnight(cal);
             cal.add(Calendar.DATE, -cal.getActualMaximum(Calendar.DAY_OF_YEAR) / 2);
         } else {
-            cal = (Calendar) pickerView.getInitialDate().clone();
+            cal = (Calendar) state.getInitialDate().clone();
             cal.add(Calendar.DATE, -defaultNumberOfDays / 2);
         }
         return cal;
@@ -58,8 +58,8 @@ public class DayWheel extends Wheel {
 
     private Calendar getEndCal(){
         Calendar cal;
-        Calendar max = pickerView.getMaximumDate();
-        Calendar min = pickerView.getMinimumDate();
+        Calendar max = state.getMaximumDate();
+        Calendar min = state.getMinimumDate();
         if (max != null) {
             cal = (Calendar) max.clone();
             resetToMidnight(cal);
@@ -68,7 +68,7 @@ public class DayWheel extends Wheel {
             resetToMidnight(cal);
             cal.add(Calendar.DATE, cal.getActualMaximum(Calendar.DAY_OF_YEAR) / 2);
         } else {
-            cal = (Calendar) pickerView.getInitialDate().clone();
+            cal = (Calendar) state.getInitialDate().clone();
             cal.setTime(new Date());
             cal.add(Calendar.DATE, defaultNumberOfDays / 2);
         }
@@ -88,13 +88,13 @@ public class DayWheel extends Wheel {
 
     @Override
     public boolean visible() {
-        return pickerView.mode == Mode.datetime;
+        return state.getMode() == Mode.datetime;
     }
 
 
     @Override
     public String getFormatPattern() {
-        return LocaleUtils.getDatePattern(pickerView.locale)
+        return LocaleUtils.getDatePattern(state.getLocale())
                 .replace("EEEE", "EEE")
                 .replace("MMMM", "MMM");
     }
@@ -113,7 +113,7 @@ public class DayWheel extends Wheel {
     }
 
     private String toTodayString(String value) {
-        String todayString = Utils.printToday(pickerView.locale);
+        String todayString = Utils.printToday(state.getLocale());
         boolean shouldBeCapitalized = Character.isUpperCase(value.charAt(0));
         return shouldBeCapitalized
                 ? Utils.capitalize(todayString)
@@ -122,7 +122,7 @@ public class DayWheel extends Wheel {
 
     private String removeYear(String value) {
         ArrayList<String> pieces = Utils.splitOnSpace(value);
-        pieces.remove(LocaleUtils.getFullPatternPos("y", pickerView.locale));
+        pieces.remove(LocaleUtils.getFullPatternPos("y", state.getLocale()));
         return TextUtils.join(" ", pieces);
     }
 

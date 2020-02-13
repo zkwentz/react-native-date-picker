@@ -21,9 +21,9 @@ public class MinutesWheel extends Wheel {
         ArrayList<String> values = new ArrayList<>();
 
         cal.set(Calendar.MINUTE, 0);
-        for(int i=0; i<60; i = i + pickerView.minuteInterval) {
+        for(int i=0; i<60; i = i + state.getMinuteInterval()) {
             values.add(format.format(cal.getTime()));
-            cal.add(Calendar.MINUTE, pickerView.minuteInterval);
+            cal.add(Calendar.MINUTE, state.getMinuteInterval());
         }
 
         return values;
@@ -31,7 +31,7 @@ public class MinutesWheel extends Wheel {
 
     @Override
     public boolean visible() {
-        return pickerView.mode != Mode.date;
+        return state.getMode() != Mode.date;
     }
 
     @Override

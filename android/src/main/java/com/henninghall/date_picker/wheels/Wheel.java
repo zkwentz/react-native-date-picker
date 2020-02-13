@@ -5,6 +5,7 @@ import android.view.View;
 
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 import com.henninghall.date_picker.PickerView;
+import com.henninghall.date_picker.State;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public abstract class Wheel {
 
     private final Wheel self;
     public final int id;
-    public PickerView pickerView;
+    protected final State state;
     private Calendar userSetValue;
 
     public abstract boolean visible();
@@ -32,11 +33,11 @@ public abstract class Wheel {
     public SimpleDateFormat format;
 
     public Wheel(final PickerView pickerView, final int id) {
+        this.state = pickerView.getState();
         this.id = id;
         this.self = this;
-        this.pickerView = pickerView;
         this.picker = (NumberPickerView) pickerView.findViewById(id);
-        this.format = new SimpleDateFormat(getFormatPattern(), pickerView.locale);
+        this.format = new SimpleDateFormat(getFormatPattern(), state.getLocale());
         picker.setTextAlign(getTextAlign());
         picker.setOnValueChangedListener(new NumberPickerView.OnValueChangeListener() {
             @Override
@@ -47,7 +48,7 @@ public abstract class Wheel {
     }
 
     private int getIndexOfDate(Calendar date){
-        format.setTimeZone(pickerView.timeZone);
+        format.setTimeZone(state.getTimeZone());
         return values.indexOf(format.format(date.getTime()));
     }
 
@@ -69,7 +70,7 @@ public abstract class Wheel {
     }
 
     public void setValue(Calendar date) {
-        format.setTimeZone(pickerView.timeZone);
+        format.setTimeZone(state.getTimeZone());
         this.userSetValue = date;
         int index = getIndexOfDate(date);
 
@@ -81,7 +82,7 @@ public abstract class Wheel {
     }
 
     public void refresh() {
-        this.format = new SimpleDateFormat(getFormatPattern(), pickerView.locale);
+        this.format = new SimpleDateFormat(getFormatPattern(), state.getLocale());
         if (!this.visible()) return;
         init();
     }
@@ -112,7 +113,7 @@ public abstract class Wheel {
     }
 
     String getLocaleString(Calendar cal) {
-        return getString(cal, this.pickerView.locale);
+        return getString(cal, this.state.getLocale());
     }
 
     private String getString(Calendar cal, Locale locale){

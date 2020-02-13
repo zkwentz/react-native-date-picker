@@ -29,13 +29,13 @@ public class EmptyWheelUpdater {
 
         for (int i = 0; i < emptyViewsToAdd; i++) {
             int index = i * 2;
-            pickerView.wheelsWrapper.addView(views.get(Utils.emptyWheelIds[i]), index);
+            pickerView.addWheel(views.get(Utils.emptyWheelIds[i]), index);
         }
     }
 
     private void hideAll() {
         for (NumberPickerView view: views.values()) {
-            pickerView.wheelsWrapper.removeView(view);
+            pickerView.removeWheel(view);
         }
     }
 

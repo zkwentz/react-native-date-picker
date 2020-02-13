@@ -24,7 +24,8 @@ class Style {
         this.gradientBottom =  (GradientDrawable) overlayBottom.getDrawable();
     }
 
-    public void setFadeToColor(String color) {
+    public void updateFadeToColor() {
+        String color = pickerView.getState().getFadeToColor();
         int alpha = validColor(color) ? 255 : 0;
         gradientTop.setAlpha(alpha);
         gradientBottom.setAlpha(alpha);
@@ -36,15 +37,17 @@ class Style {
         }
     }
 
-    public void setTextColor(String color) {
+    public void updateTextColor() {
+        String color = pickerView.getState().getTextColor();
         this.pickerView.applyOnAllWheels(new TextColor(color));
     }
 
-    public void setHeight(int height) {
+    public void updateHeight() {
+        int height = pickerView.getState().getHeight();
         int showCount = height / DP_PER_SHOW_SHOW_COUNT;
         int oddShowCount = showCount % 2 == 0 ? showCount + 1 : showCount;
         pickerView.applyOnAllWheels(new SetShowCount(oddShowCount));
-        setShownCountOnEmptyWheels(oddShowCount);
+        setShownCountOnEmptyWheels( oddShowCount);
     }
 
     private void setShownCountOnEmptyWheels(int shownCount) {

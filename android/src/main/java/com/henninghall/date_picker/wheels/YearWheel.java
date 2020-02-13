@@ -40,22 +40,22 @@ public class YearWheel extends Wheel
     }
 
     private int getEndYear() {
-        if (this.pickerView.getMaximumDate() == null) {
+        if (state.getMaximumDate() == null) {
             return this.defaultEndYear;
         }
-        return this.pickerView.getMaximumDate().get(Calendar.YEAR);
+        return state.getMaximumDate().get(Calendar.YEAR);
     }
 
     private int getStartYear() {
-        if (this.pickerView.getMinimumDate() == null) {
+        if (state.getMinimumDate() == null) {
             return this.defaultStartYear;
         }
-        return this.pickerView.getMinimumDate().get(Calendar.YEAR);
+        return state.getMinimumDate().get(Calendar.YEAR);
     }
 
     @Override
     public boolean visible() {
-        return this.pickerView.mode == Mode.date;
+        return state.getMode() == Mode.date;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class YearWheel extends Wheel
 
     @Override
     public String getFormatPattern() {
-        return LocaleUtils.getPatternIncluding("y", pickerView.locale);
+        return LocaleUtils.getPatternIncluding("y", state.getLocale());
     }
 
 }

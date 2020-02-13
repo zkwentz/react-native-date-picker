@@ -31,7 +31,7 @@ public class HourWheel extends Wheel {
 
     @Override
     public boolean visible() {
-        return pickerView.mode != Mode.date;
+        return state.getMode() != Mode.date;
     }
 
     @Override

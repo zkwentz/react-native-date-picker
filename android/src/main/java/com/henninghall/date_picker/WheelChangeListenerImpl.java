@@ -26,17 +26,16 @@ public class WheelChangeListenerImpl implements WheelChangeListener {
     @Override
     public void onChange(Wheel picker) {
         WritableMap event = Arguments.createMap();
-        TimeZone timeZone = pickerView.timeZone;
+        TimeZone timeZone = pickerView.getState().getTimeZone();
         SimpleDateFormat dateFormat = pickerView.getDateFormat();
-        Calendar minDate = pickerView.getMinimumDate();
-        Calendar maxDate = pickerView.getMaximumDate();
+        Calendar minDate = pickerView.getState().getMinimumDate();
+        Calendar maxDate = pickerView.getState().getMaximumDate();
         try {
             dateFormat.setTimeZone(timeZone);
             Calendar date = Calendar.getInstance(timeZone);
             String toParse = this.pickerView.getDateString();
             Date newDate = dateFormat.parse(toParse);
             date.setTime(newDate);
-
 
             if (minDate != null && date.before(minDate)) pickerView.applyOnVisibleWheels(
                     new AnimateToDate(minDate)
@@ -46,7 +45,8 @@ public class WheelChangeListenerImpl implements WheelChangeListener {
             );
             else {
                 event.putString("date", Utils.dateToIso(date));
-                DatePickerManager.context.getJSModule(RCTEventEmitter.class).receiveEvent(pickerView.getId(), "dateChange", event);
+                DatePickerManager.context.getJSModule(RCTEventEmitter.class)
+                        .receiveEvent(pickerView.getId(), "dateChange", event);
             }
         } catch (ParseException e) {
             e.printStackTrace();

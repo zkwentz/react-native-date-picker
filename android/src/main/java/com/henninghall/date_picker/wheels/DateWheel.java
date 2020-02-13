@@ -32,12 +32,12 @@ public class DateWheel extends Wheel
 
     @Override
     public boolean visible() {
-        return this.pickerView.mode == Mode.date;
+        return state.getMode() == Mode.date;
     }
 
     @Override
     public String getFormatPattern() {
-        return LocaleUtils.getPatternIncluding("d", pickerView.locale);
+        return LocaleUtils.getPatternIncluding("d", state.getLocale());
     }
 
     @Override

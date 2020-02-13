@@ -8,18 +8,15 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
 
 import net.time4j.android.ApplicationStarter;
-import org.apache.commons.lang3.LocaleUtils;
 
+import java.util.ArrayList;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class DatePickerManager extends SimpleViewManager<PickerView>  {
 
-  public static final String REACT_CLASS = "DatePickerManager";
+  private static final String REACT_CLASS = "DatePickerManager";
   private static final int SCROLL = 1;
-
-  public static ThemedReactContext context;
-  private String date;
+  static ThemedReactContext context;
 
   @Override
   public String getName() {
@@ -35,67 +32,77 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
 
   @ReactProp(name = "mode")
   public void setMode(PickerView view, String mode) {
-    Mode m;
-    try {
-      m = Mode.valueOf(mode);
-    } catch (Exception e) {
-      throw new IllegalArgumentException("Invalid mode. Valid modes: 'datetime', 'date', 'time'");
-    }
-    view.setMode(m);
+    view.getState().setMode(mode);
+    view.updateProps.add("mode");
   }
 
   @ReactProp(name = "date")
   public void setDate(PickerView view, String date) {
-    this.date = date;
+    view.getState().setDate(date);
+    view.updateProps.add("date");
   }
 
   @ReactProp(name = "locale")
   public void setLocale(PickerView view, String locale) {
-    view.setLocale(LocaleUtils.toLocale(locale.replace('-','_')));
+    view.getState().setLocale(locale);
+    view.updateProps.add("locale");
   }
 
   @ReactProp(name = "minimumDate")
   public void setMinimumDate(PickerView view, String date) {
-    view.setMinimumDate(date);
+    view.getState().setMinimumDate(date);
+    view.updateProps.add("minimumDate");
   }
 
   @ReactProp(name = "maximumDate")
   public void setMaximumDate(PickerView view, String date) {
-    view.setMaximumDate(date);
+    view.getState().setMaximumDate(date);
+    view.updateProps.add("maximumDate");
   }
 
   @ReactProp(name = "fadeToColor")
   public void setFadeToColor(PickerView view, String color) {
-    view.style.setFadeToColor(color);
+    view.getState().setFadeToColor(color);
+    view.updateProps.add("fadeToColor");
   }
 
   @ReactProp(name = "textColor")
   public void setTextColor(PickerView view, String color) {
-    view.style.setTextColor(color);
+    view.getState().setTextColor(color);
+    view.updateProps.add("textColor");
   }
 
   @ReactProp(name = "minuteInterval")
   public void setMinuteInterval(PickerView view,  int interval) throws Exception {
     if (interval < 0 || interval > 59) throw new Exception("Minute interval out of bounds");
-    view.setMinuteInterval(interval);
+    view.getState().setMinuteInterval(interval);
+    view.updateProps.add("minuteInterval");
   }
 
   @ReactProp(name = "utc")
-  public void setUtc(PickerView view,  boolean utc) throws Exception {
-    TimeZone timeZone = utc ? TimeZone.getTimeZone("UTC") : TimeZone.getDefault();
-    view.setTimeZone(timeZone);
+  public void setUtc(PickerView view,  boolean utc) {
+    view.getState().setUtc(utc);
+    view.updateProps.add("utc");
   }
 
   @ReactPropGroup(names = {"height", "width"}, customType = "Style")
   public void setStyle(PickerView view, int index, Integer style) {
-    if(index == 0) view.style.setHeight(style);
+    if(index == 0) {
+      view.getState().setHeight(style);
+      view.updateProps.add("height");
+    }
   }
 
   @Override
   public Map<String, Integer> getCommandsMap() {
-    return MapBuilder.of(
-            "scroll", SCROLL
-    );
+    return MapBuilder.of("scroll", SCROLL);
+  }
+
+
+  @Override
+  protected void onAfterUpdateTransaction(PickerView view) {
+   super.onAfterUpdateTransaction(view);
+    view.update();
   }
 
   public void receiveCommand(final PickerView view, int command, final ReadableArray args) {
@@ -104,15 +111,6 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
       int scrollTimes = args.getInt(1);
       view.scroll(wheelIndex, scrollTimes);
     }
-  }
-
-  @Override
-  protected void onAfterUpdateTransaction(PickerView view) {
-   super.onAfterUpdateTransaction(view);
-    // updateDisplayValuesIfNeeded() refreshes
-    // which options are available. Should happen before updating the selected date.
-    view.updateDisplayValuesIfNeeded();
-    view.setDate(date);
   }
 
   public Map getExportedCustomBubblingEventTypeConstants() {
