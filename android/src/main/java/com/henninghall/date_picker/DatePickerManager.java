@@ -13,6 +13,7 @@ import com.henninghall.date_picker.props.FadeToColorProp;
 import com.henninghall.date_picker.props.LocaleProp;
 import com.henninghall.date_picker.props.MaximumDateProp;
 import com.henninghall.date_picker.props.MinimumDateProp;
+import com.henninghall.date_picker.props.MinuteIntervalProp;
 import com.henninghall.date_picker.props.ModeProp;
 import com.henninghall.date_picker.props.TextColorProp;
 import com.henninghall.date_picker.props.UtcProp;
@@ -41,7 +42,7 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
   }
 
   @ReactPropGroup(names = { DateProp.name, ModeProp.name, LocaleProp.name, MaximumDateProp.name,
-          MinimumDateProp.name, FadeToColorProp.name, TextColorProp.name, UtcProp.name})
+          MinimumDateProp.name, FadeToColorProp.name, TextColorProp.name, UtcProp.name, MinuteIntervalProp.name})
   public void setProps(PickerView view, int index, Dynamic value) {
     String[] propNames = getMethodAnnotation("setProps").names();
     String propName = propNames[index];

@@ -1,6 +1,8 @@
 package com.henninghall.date_picker;
 
 import com.henninghall.date_picker.models.Mode;
+import com.henninghall.date_picker.wheelFunctions.AddOnChangeListener;
+import com.henninghall.date_picker.wheelFunctions.WheelFunction;
 import com.henninghall.date_picker.wheels.AmPmWheel;
 import com.henninghall.date_picker.wheels.DateWheel;
 import com.henninghall.date_picker.wheels.DayWheel;
@@ -12,6 +14,7 @@ import com.henninghall.date_picker.wheels.YearWheel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,6 +24,7 @@ class Wheels {
 
     private final State state;
     private WheelOrder wheelOrder;
+    private WheelChangeListener onWheelChangeListener;
     HourWheel hourWheel;
     DayWheel dayWheel;
     MinutesWheel minutesWheel;
@@ -44,8 +48,25 @@ class Wheels {
         hourWheel = new HourWheel(pickerView, R.id.hour);
 
         wheelOrder = new WheelOrder(this, pickerView);
+        onWheelChangeListener = new WheelChangeListenerImpl(pickerView);
         emptyWheelUpdater = new EmptyWheelUpdater(pickerView);
         changeAmPmWhenPassingMidnightOrNoon();
+
+        applyOnAllWheels(new AddOnChangeListener(onWheelChangeListener));
+    }
+
+    public Collection<Wheel> getVisibleWheels() {
+        Collection<Wheel> visibleWheels = new ArrayList<>();
+        for (Wheel wheel: getAll()) if (wheel.visible()) visibleWheels.add(wheel);
+        return visibleWheels;
+    }
+
+    public void applyOnAllWheels(WheelFunction function) {
+        for (Wheel wheel: getAll()) function.apply(wheel);
+    }
+
+    public void applyOnVisibleWheels(WheelFunction function) {
+        for (Wheel wheel: getVisibleWheels()) function.apply(wheel);
     }
 
 

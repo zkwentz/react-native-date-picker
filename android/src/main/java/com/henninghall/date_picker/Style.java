@@ -3,10 +3,6 @@ package com.henninghall.date_picker;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.ImageView;
-import com.henninghall.date_picker.wheelFunctions.SetShowCount;
-import com.henninghall.date_picker.wheelFunctions.TextColor;
-
-import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 
 class Style {
@@ -37,25 +33,14 @@ class Style {
         }
     }
 
-    public void updateTextColor() {
-        String color = pickerView.getState().getTextColor();
-        this.pickerView.applyOnAllWheels(new TextColor(color));
-    }
-
-    public void updateHeight() {
+    public int getShownCount() {
         int height = pickerView.getState().getHeight();
         int showCount = height / DP_PER_SHOW_SHOW_COUNT;
         int oddShowCount = showCount % 2 == 0 ? showCount + 1 : showCount;
-        pickerView.applyOnAllWheels(new SetShowCount(oddShowCount));
-        setShownCountOnEmptyWheels( oddShowCount);
+        return oddShowCount;
     }
 
-    private void setShownCountOnEmptyWheels(int shownCount) {
-        for (int id : Utils.emptyWheelIds) {
-            NumberPickerView view = (NumberPickerView) pickerView.findViewById(id);
-            if(view != null) view.setShownCount(shownCount);
-        }
-    }
+
 
     private boolean validColor(String color){
         return color != null && color.length() == 7;

@@ -39,12 +39,7 @@ public abstract class Wheel {
         this.picker = (NumberPickerView) pickerView.findViewById(id);
         this.format = new SimpleDateFormat(getFormatPattern(), state.getLocale());
         picker.setTextAlign(getTextAlign());
-        picker.setOnValueChangedListener(new NumberPickerView.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
-                pickerView.getListener().onChange(self);
-            }
-        });
+
     }
 
     private int getIndexOfDate(Calendar date){

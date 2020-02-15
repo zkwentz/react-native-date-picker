@@ -37,12 +37,8 @@ public class WheelChangeListenerImpl implements WheelChangeListener {
             Date newDate = dateFormat.parse(toParse);
             date.setTime(newDate);
 
-            if (minDate != null && date.before(minDate)) pickerView.applyOnVisibleWheels(
-                    new AnimateToDate(minDate)
-            );
-            else if (maxDate != null && date.after(maxDate)) pickerView.applyOnVisibleWheels(
-                    new AnimateToDate(maxDate)
-            );
+            if (minDate != null && date.before(minDate)) pickerView.animateToDate(minDate);
+            else if (maxDate != null && date.after(maxDate)) pickerView.animateToDate(maxDate);
             else {
                 event.putString("date", Utils.dateToIso(date));
                 DatePickerManager.context.getJSModule(RCTEventEmitter.class)
