@@ -3,7 +3,7 @@ package com.henninghall.date_picker.wheels;
 import android.graphics.Paint;
 
 import com.henninghall.date_picker.LocaleUtils;
-import com.henninghall.date_picker.Mode;
+import com.henninghall.date_picker.models.Mode;
 import com.henninghall.date_picker.PickerView;
 
 import java.util.ArrayList;

@@ -1,15 +1,25 @@
 package com.henninghall.date_picker;
 
+
+import com.facebook.react.bridge.Dynamic;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
+import com.henninghall.date_picker.models.Mode;
+import com.henninghall.date_picker.props.DateProp;
+import com.henninghall.date_picker.props.FadeToColorProp;
+import com.henninghall.date_picker.props.LocaleProp;
+import com.henninghall.date_picker.props.MaximumDateProp;
+import com.henninghall.date_picker.props.MinimumDateProp;
+import com.henninghall.date_picker.props.ModeProp;
+import com.henninghall.date_picker.props.TextColorProp;
+import com.henninghall.date_picker.props.UtcProp;
 
 import net.time4j.android.ApplicationStarter;
 
-import java.util.ArrayList;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class DatePickerManager extends SimpleViewManager<PickerView>  {
@@ -30,66 +40,20 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
     return new PickerView();
   }
 
-  @ReactProp(name = "mode")
-  public void setMode(PickerView view, String mode) {
-    view.getState().setMode(mode);
-    view.updateProps.add("mode");
-  }
-
-  @ReactProp(name = "date")
-  public void setDate(PickerView view, String date) {
-    view.getState().setDate(date);
-    view.updateProps.add("date");
-  }
-
-  @ReactProp(name = "locale")
-  public void setLocale(PickerView view, String locale) {
-    view.getState().setLocale(locale);
-    view.updateProps.add("locale");
-  }
-
-  @ReactProp(name = "minimumDate")
-  public void setMinimumDate(PickerView view, String date) {
-    view.getState().setMinimumDate(date);
-    view.updateProps.add("minimumDate");
-  }
-
-  @ReactProp(name = "maximumDate")
-  public void setMaximumDate(PickerView view, String date) {
-    view.getState().setMaximumDate(date);
-    view.updateProps.add("maximumDate");
-  }
-
-  @ReactProp(name = "fadeToColor")
-  public void setFadeToColor(PickerView view, String color) {
-    view.getState().setFadeToColor(color);
-    view.updateProps.add("fadeToColor");
-  }
-
-  @ReactProp(name = "textColor")
-  public void setTextColor(PickerView view, String color) {
-    view.getState().setTextColor(color);
-    view.updateProps.add("textColor");
-  }
-
-  @ReactProp(name = "minuteInterval")
-  public void setMinuteInterval(PickerView view,  int interval) throws Exception {
-    if (interval < 0 || interval > 59) throw new Exception("Minute interval out of bounds");
-    view.getState().setMinuteInterval(interval);
-    view.updateProps.add("minuteInterval");
-  }
-
-  @ReactProp(name = "utc")
-  public void setUtc(PickerView view,  boolean utc) {
-    view.getState().setUtc(utc);
-    view.updateProps.add("utc");
+  @ReactPropGroup(names = { DateProp.name, ModeProp.name, LocaleProp.name, MaximumDateProp.name,
+          MinimumDateProp.name, FadeToColorProp.name, TextColorProp.name, UtcProp.name})
+  public void setProps(PickerView view, int index, Dynamic value) {
+    String[] propNames = getMethodAnnotation("setProps").names();
+    String propName = propNames[index];
+    view.getState().setProp(propName, value);
+    view.updatedProps.add(propName);
   }
 
   @ReactPropGroup(names = {"height", "width"}, customType = "Style")
   public void setStyle(PickerView view, int index, Integer style) {
     if(index == 0) {
       view.getState().setHeight(style);
-      view.updateProps.add("height");
+      view.updatedProps.add("height");
     }
   }
 
@@ -97,7 +61,6 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
   public Map<String, Integer> getCommandsMap() {
     return MapBuilder.of("scroll", SCROLL);
   }
-
 
   @Override
   protected void onAfterUpdateTransaction(PickerView view) {
@@ -119,6 +82,16 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
                     MapBuilder.of("bubbled", "onChange")
                     )
             ).build();
+  }
+
+  private ReactPropGroup getMethodAnnotation(String methodName) {
+    Method[] methods = this.getClass().getMethods();
+    Method method = null;
+    for (Method m : methods) {
+      if (m.getName().equals(methodName))
+        method = m;
+    }
+    return method.getAnnotation(ReactPropGroup.class);
   }
 
 }

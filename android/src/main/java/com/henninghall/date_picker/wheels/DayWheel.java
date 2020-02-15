@@ -4,7 +4,7 @@ import android.graphics.Paint;
 import android.text.TextUtils;
 
 import com.henninghall.date_picker.LocaleUtils;
-import com.henninghall.date_picker.Mode;
+import com.henninghall.date_picker.models.Mode;
 import com.henninghall.date_picker.PickerView;
 import com.henninghall.date_picker.Utils;
 

@@ -1,5 +1,6 @@
 package com.henninghall.date_picker;
 
+import com.henninghall.date_picker.models.Mode;
 import com.henninghall.date_picker.wheels.AmPmWheel;
 import com.henninghall.date_picker.wheels.DateWheel;
 import com.henninghall.date_picker.wheels.DayWheel;

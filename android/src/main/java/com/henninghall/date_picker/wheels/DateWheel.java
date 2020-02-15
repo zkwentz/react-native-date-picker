@@ -1,12 +1,10 @@
 package com.henninghall.date_picker.wheels;
 
 import android.graphics.Paint;
-import android.text.format.DateUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import com.henninghall.date_picker.*;
+import com.henninghall.date_picker.models.Mode;
 
 public class DateWheel extends Wheel
 {

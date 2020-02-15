@@ -4,8 +4,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.henninghall.date_picker.props.DateProp;
+import com.henninghall.date_picker.props.FadeToColorProp;
+import com.henninghall.date_picker.props.LocaleProp;
+import com.henninghall.date_picker.props.ModeProp;
+import com.henninghall.date_picker.props.TextColorProp;
 import com.henninghall.date_picker.wheelFunctions.Refresh;
 import com.henninghall.date_picker.wheelFunctions.SetDate;
+import com.henninghall.date_picker.wheelFunctions.TextColor;
 import com.henninghall.date_picker.wheelFunctions.UpdateVisibility;
 import com.henninghall.date_picker.wheelFunctions.WheelFunction;
 import com.henninghall.date_picker.wheels.Wheel;
@@ -27,7 +33,7 @@ public class PickerView extends RelativeLayout {
 
     private State state;
 
-    public ArrayList<String> updateProps = new ArrayList<>();
+    public ArrayList<String> updatedProps = new ArrayList<>();
 
     public PickerView() {
         super(DatePickerManager.context);
@@ -94,40 +100,40 @@ public class PickerView extends RelativeLayout {
 
     public void update() {
 
-        if(updateProps.contains("fadeToColor")) {
+        if(updatedProps.contains(FadeToColorProp.name)) {
             style.updateFadeToColor();
         }
 
-        if(updateProps.contains("textColor")) {
+        if(updatedProps.contains(TextColorProp.name)) {
             style.updateTextColor();
         }
 
-        if(updateProps.contains("mode")) {
+        if(updatedProps.contains(ModeProp.name)) {
             applyOnAllWheels(new UpdateVisibility());
         }
 
-        if(updateProps.contains("height")) {
+        if(updatedProps.contains("height")) {
             style.updateHeight();
         }
 
-        if(updateProps.contains("mode") || updateProps.contains("locale")) {
+        if(updatedProps.contains(ModeProp.name) || updatedProps.contains(LocaleProp.name)) {
             wheels.updateWheelOrder(state.getLocale());
         }
 
         ArrayList<String> nonRefreshingProps = new ArrayList<String>(){{
-            add("date");
-            add("fadeToColor");
-            add("textColor");
+            add(DateProp.name);
+            add(FadeToColorProp.name);
+            add(TextColorProp.name);
         }};
-        updateProps.removeAll(nonRefreshingProps);
+        updatedProps.removeAll(nonRefreshingProps);
 
-        if(updateProps.size() != 0) {
+        if(updatedProps.size() != 0) {
             applyOnAllWheels(new Refresh());
         }
 
         updateDate();
 
-        updateProps = new ArrayList<>();
+        updatedProps = new ArrayList<>();
     }
 
 

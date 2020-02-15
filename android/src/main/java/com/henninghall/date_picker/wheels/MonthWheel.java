@@ -4,6 +4,7 @@ import android.graphics.Paint;
 
 import java.util.*;
 import com.henninghall.date_picker.*;
+import com.henninghall.date_picker.models.Mode;
 
 public class MonthWheel extends Wheel
 {
