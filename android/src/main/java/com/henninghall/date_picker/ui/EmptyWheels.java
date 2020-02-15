@@ -12,12 +12,12 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 public class EmptyWheels {
 
     private final HashMap<Integer, NumberPickerView> views;
-    private final UIManager uiManager;
+    private final Wheels wheels;
     private View rootView;
     private State state;
 
-    EmptyWheels(View rootView, UIManager uiManager, State state) {
-        this.uiManager = uiManager;
+    EmptyWheels(View rootView, Wheels wheels, State state) {
+        this.wheels = wheels;
         this.rootView = rootView;
         this.state = state;
         this.views = getViews();
@@ -32,12 +32,12 @@ public class EmptyWheels {
         return views;
     }
 
-    void update() {
+    void add() {
         int numberOfVisibleWheels = state.getVisibleWheels().size();
         int emptyViewsToAdd = numberOfVisibleWheels + 1;
         for (int i = 0; i < emptyViewsToAdd; i++) {
             int index = i * 2;
-            uiManager.addWheel(views.get(Utils.emptyWheelIds[i]), index);
+            wheels.addWheel(views.get(Utils.emptyWheelIds[i]), index);
         }
     }
 

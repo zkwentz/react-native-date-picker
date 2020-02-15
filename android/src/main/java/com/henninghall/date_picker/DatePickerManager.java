@@ -7,7 +7,6 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
-import com.henninghall.date_picker.models.Mode;
 import com.henninghall.date_picker.props.DateProp;
 import com.henninghall.date_picker.props.FadeToColorProp;
 import com.henninghall.date_picker.props.LocaleProp;
@@ -27,7 +26,7 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
 
   private static final String REACT_CLASS = "DatePickerManager";
   private static final int SCROLL = 1;
-  static ThemedReactContext context;
+  public static ThemedReactContext context;
 
   @Override
   public String getName() {
@@ -46,15 +45,14 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
   public void setProps(PickerView view, int index, Dynamic value) {
     String[] propNames = getMethodAnnotation("setProps").names();
     String propName = propNames[index];
-    view.getState().setProp(propName, value);
-    view.updatedProps.add(propName);
+    view.updateProp(propName, value);
+
   }
 
-  @ReactPropGroup(names = {"height", "width"}, customType = "Style")
+  @ReactPropGroup(names = {}, customType = "Style")
   public void setStyle(PickerView view, int index, Integer style) {
     if(index == 0) {
-      view.getState().setHeight(style);
-      view.updatedProps.add("height");
+      view.updateProp("height", null);
     }
   }
 
@@ -64,9 +62,14 @@ public class DatePickerManager extends SimpleViewManager<PickerView>  {
   }
 
   @Override
-  protected void onAfterUpdateTransaction(PickerView view) {
-   super.onAfterUpdateTransaction(view);
-    view.update();
+  protected void onAfterUpdateTransaction(PickerView pickerView) {
+   super.onAfterUpdateTransaction(pickerView);
+     try{
+       pickerView.update();
+     }
+     catch (Exception e){
+       e.printStackTrace();
+     }
   }
 
   public void receiveCommand(final PickerView view, int command, final ReadableArray args) {
