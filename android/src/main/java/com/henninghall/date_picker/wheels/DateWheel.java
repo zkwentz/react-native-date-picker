@@ -6,10 +6,12 @@ import java.util.*;
 import com.henninghall.date_picker.*;
 import com.henninghall.date_picker.models.Mode;
 
+import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+
 public class DateWheel extends Wheel
 {
-    public DateWheel(final PickerView pickerView, final int id) {
-        super(pickerView, id);
+    public DateWheel(final NumberPickerView picker, final State id) {
+        super(picker, id);
     }
 
 

@@ -3,11 +3,11 @@ package com.henninghall.date_picker;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-public class Selector {
+public class PropSelector {
 
     private final State state;
 
-    Selector(State state){
+    PropSelector(State state){
         this.state = state;
     }
 

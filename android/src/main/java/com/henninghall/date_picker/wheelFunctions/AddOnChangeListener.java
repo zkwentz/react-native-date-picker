@@ -1,6 +1,6 @@
 package com.henninghall.date_picker.wheelFunctions;
 
-import com.henninghall.date_picker.WheelChangeListener;
+import com.henninghall.date_picker.ui.WheelChangeListener;
 import com.henninghall.date_picker.wheels.Wheel;
 
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;

@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.text.TextUtils;
 
 import com.henninghall.date_picker.LocaleUtils;
+import com.henninghall.date_picker.State;
 import com.henninghall.date_picker.models.Mode;
 import com.henninghall.date_picker.PickerView;
 import com.henninghall.date_picker.Utils;
@@ -12,15 +13,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+
 
 public class DayWheel extends Wheel {
 
     private String todayValue;
-
-    public DayWheel(PickerView pickerView, int id) {
-        super(pickerView, id);
-    }
     private static int defaultNumberOfDays = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_YEAR);
+
+    public DayWheel(NumberPickerView picker, State state) {
+        super(picker, state);
+    }
 
     @Override
     public ArrayList<String> getValues() {

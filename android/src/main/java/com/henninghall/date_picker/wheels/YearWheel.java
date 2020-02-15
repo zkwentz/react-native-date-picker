@@ -3,19 +3,22 @@ package com.henninghall.date_picker.wheels;
 import android.graphics.Paint;
 
 import com.henninghall.date_picker.LocaleUtils;
+import com.henninghall.date_picker.State;
 import com.henninghall.date_picker.models.Mode;
 import com.henninghall.date_picker.PickerView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import cn.carbswang.android.numberpickerview.library.NumberPickerView;
+
 public class YearWheel extends Wheel
 {
     private int defaultStartYear;
     private int defaultEndYear;
 
-    public YearWheel(final PickerView pickerView, final int id) {
-        super(pickerView, id);
+    public YearWheel(final NumberPickerView picker, final State id) {
+        super(picker, id);
         this.defaultStartYear = 1900;
         this.defaultEndYear = 2100;
     }

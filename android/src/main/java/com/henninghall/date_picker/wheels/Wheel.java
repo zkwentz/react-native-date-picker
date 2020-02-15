@@ -4,7 +4,6 @@ import android.graphics.Paint;
 import android.view.View;
 
 import cn.carbswang.android.numberpickerview.library.NumberPickerView;
-import com.henninghall.date_picker.PickerView;
 import com.henninghall.date_picker.State;
 
 import java.text.SimpleDateFormat;
@@ -14,8 +13,6 @@ import java.util.Locale;
 
 public abstract class Wheel {
 
-    private final Wheel self;
-    public final int id;
     protected final State state;
     private Calendar userSetValue;
 
@@ -28,18 +25,15 @@ public abstract class Wheel {
         return value;
     }
 
-    ArrayList<String> values = new ArrayList<>();
+    private ArrayList<String> values = new ArrayList<>();
     public NumberPickerView picker;
     public SimpleDateFormat format;
 
-    public Wheel(final PickerView pickerView, final int id) {
-        this.state = pickerView.getState();
-        this.id = id;
-        this.self = this;
-        this.picker = (NumberPickerView) pickerView.findViewById(id);
+    public Wheel(NumberPickerView picker, State state) {
+        this.state = state;
+        this.picker = picker;
         this.format = new SimpleDateFormat(getFormatPattern(), state.getLocale());
         picker.setTextAlign(getTextAlign());
-
     }
 
     private int getIndexOfDate(Calendar date){
