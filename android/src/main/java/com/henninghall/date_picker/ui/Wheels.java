@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import com.henninghall.date_picker.R;
 import com.henninghall.date_picker.State;
 import com.henninghall.date_picker.Utils;
-import com.henninghall.date_picker.WheelType;
+import com.henninghall.date_picker.models.WheelType;
 import com.henninghall.date_picker.models.Mode;
 import com.henninghall.date_picker.wheelFunctions.AddOnChangeListener;
 import com.henninghall.date_picker.wheelFunctions.WheelFunction;

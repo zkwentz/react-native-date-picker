@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Dynamic;
 import com.henninghall.date_picker.models.Mode;
+import com.henninghall.date_picker.models.WheelType;
 import com.henninghall.date_picker.props.DateProp;
 import com.henninghall.date_picker.props.FadeToColorProp;
 import com.henninghall.date_picker.props.HeightProp;
