@@ -9,7 +9,9 @@ const {
 
 const scrollMinuteWheel = () => scrollWheel(2, 1)
 
-describe.only('Minute interval', () => {
+// I haven't found a way to change the timezone on the emulator to be able to run these tests.
+// Until possible, run these tests locally when needed with Europe/Stockholm timezone.
+describe.skip('Timezone offset', () => {
   before(async () => {
     await device.reloadReactNative()
     await element(by.text('Advanced')).tap()
@@ -43,7 +45,7 @@ describe.only('Minute interval', () => {
     await expectDateString('Fri Dec 31801 PM ')
   })
 
-  describe('summertime', () => {
+  describe('daylight saving', () => {
     const firstOfJuly = new Date(2000, 6, 1, 0, 0)
     const firstOfJune = new Date(2000, 5, 1, 0, 0)
 

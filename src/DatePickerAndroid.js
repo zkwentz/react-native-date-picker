@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, requireNativeComponent } from 'react-native'
-import moment from 'moment'
 import { throwIfInvalidProps } from './propChecker'
+import { addMinutes, subMinutes, parseISO } from 'date-fns'
 
 const NativeDatePicker = requireNativeComponent(
   `DatePickerManager`,
@@ -26,7 +26,7 @@ class DatePickerAndroid extends React.PureComponent {
   }
 
   _onChange = e => {
-    const jsDate = this._fromIsoWithTimeZoneOffset(e.nativeEvent.date).toDate()
+    const jsDate = this._fromIsoWithTimeZoneOffset(e.nativeEvent.date)
     this.props.onDateChange && this.props.onDateChange(jsDate)
     if (this.props.onDateStringChange) {
       this.props.onDateStringChange(e.nativeEvent.dateString)
@@ -43,22 +43,16 @@ class DatePickerAndroid extends React.PureComponent {
 
   _date = () => this._toIsoWithTimeZoneOffset(this.props.date)
 
-  _fromIsoWithTimeZoneOffset = date => {
-    if (this.props.timeZoneOffsetInMinutes === undefined) return moment(date)
-
-    return moment
-      .utc(date)
-      .subtract(this.props.timeZoneOffsetInMinutes, 'minutes')
+  _fromIsoWithTimeZoneOffset = isoDate => {
+    const date = parseISO(isoDate)
+    if (this.props.timeZoneOffsetInMinutes === undefined) return date
+    return subMinutes(date, this.props.timeZoneOffsetInMinutes)
   }
 
   _toIsoWithTimeZoneOffset = date => {
     if (this.props.timeZoneOffsetInMinutes === undefined)
-      return moment(date).toISOString()
-
-    return moment
-      .utc(date)
-      .add(this.props.timeZoneOffsetInMinutes, 'minutes')
-      .toISOString()
+      return date.toISOString()
+    return addMinutes(date, this.props.timeZoneOffsetInMinutes).toISOString()
   }
 }
 
