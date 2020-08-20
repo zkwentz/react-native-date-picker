@@ -62,7 +62,7 @@ public class DerivedData {
         ArrayList<WheelType> unorderedTypes = new ArrayList(Arrays.asList(WheelType.values()));
         ArrayList<WheelType> orderedWheels = new ArrayList<>();
 
-        // Always put day wheel first
+        // Always put day wheel first. TODO: This could be improved with in for instance vi-VN locale where day wheel should be last.
         unorderedTypes.remove(WheelType.DAY);
         orderedWheels.add(WheelType.DAY);
 
