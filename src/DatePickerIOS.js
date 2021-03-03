@@ -45,8 +45,14 @@ export default class DatePickerIOS extends React.Component {
         minuteInterval={props.minuteInterval}
         timeZoneOffsetInMinutes={props.timeZoneOffsetInMinutes}
         onChange={this._onChange}
-        onStartShouldSetResponder={() => true}
-        onResponderTerminationRequest={() => false}
+        onStartShouldSetResponder={() => {
+          if (props.onFocus) props.onFocus();
+          return true;
+        }}
+        onResponderTerminationRequest={() => {
+          if (props.onBlur) props.onBlur();
+          return false;
+        }}
         textColor={props.textColor}
       />
     )
